@@ -456,7 +456,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abac791e5d2322545919f6839f0bf096, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  smoothTime: 0.05
   speed: 10
+  gravityMultiplier: 1
+  jumpPower: 4
 --- !u!4 &963049774
 Transform:
   m_ObjectHideFlags: 0
@@ -466,7 +469,7 @@ Transform:
   m_GameObject: {fileID: 963049772}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.1688404, y: 5.0116243, z: 5.119853}
+  m_LocalPosition: {x: 0, y: 1.07, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -498,7 +501,7 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!1 &1205598295
 GameObject:
   m_ObjectHideFlags: 0
@@ -668,7 +671,7 @@ Transform:
   m_GameObject: {fileID: 1509223680}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.1688404, y: -4.5116243, z: -5.119853}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -778,7 +781,7 @@ Transform:
   m_GameObject: {fileID: 1515118678}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.1688404, y: -4.0116243, z: -4.619853}
+  m_LocalPosition: {x: 0, y: 1, z: 0.5}
   m_LocalScale: {x: 0.4, y: 0.4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -916,6 +919,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: efd59589-0762-4c93-94ef-72ba586a5f03
     m_ActionName: 'GamePlay/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 963049773}
+        m_TargetAssemblyTypeName: PlayerConroller, Assembly-CSharp
+        m_MethodName: Jump
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: c308f065-1ac0-40e8-a388-9069454b0a1d
+    m_ActionName: 'GamePlay/Jump[/Keyboard/space]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: GamePlay
