@@ -6,6 +6,7 @@ public class GameLoopManager : MonoBehaviour
 {
     public bool endLoop;
 
+    private static Queue<Enemy> _enemiesToRemove;
     private static Queue<int> _enemyIDsToSummon;
 
     private void Start()
@@ -13,8 +14,8 @@ public class GameLoopManager : MonoBehaviour
         _enemyIDsToSummon = new Queue<int>();
         EntitySummoner.Init();
 
-        StartCoroutine(GameLoop());
-        InvokeRepeating("SummonTest", 0f, 1f);
+        //StartCoroutine(GameLoop());
+        //InvokeRepeating("SummonTest", 0f, 1f);
     }
 
     void SummonTest()
@@ -48,6 +49,14 @@ public class GameLoopManager : MonoBehaviour
 
             //Remove enemies
 
+            if (_enemiesToRemove.Count > 0)
+            {
+                for (int i = 0; i < _enemiesToRemove.Count; i++)
+                {
+                    EntitySummoner.RemoveEnemy(_enemiesToRemove.Dequeue());
+                }
+            }
+
             //Removes towers
 
             yield return null;
@@ -57,5 +66,10 @@ public class GameLoopManager : MonoBehaviour
     public static void EnqueueEnemyIDToSummon(int ID)
     {
         _enemyIDsToSummon.Enqueue(ID);
+    }
+
+    public static void EnqueueEnemyToRemove(Enemy EnemyToRemove)
+    {
+        _enemiesToRemove.Enqueue(EnemyToRemove);
     }
 }

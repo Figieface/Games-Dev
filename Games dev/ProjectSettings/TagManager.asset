@@ -6,6 +6,7 @@ TagManager:
   tags:
   - CanPlace
   - CannotPlace
+  - Base
   layers:
   - Default
   - TransparentFX

@@ -70,7 +70,8 @@ public class EntitySummoner : MonoBehaviour
 
     public static void RemoveEnemy(Enemy EnemyToRemove)
     {
-        EnemyObjectPools[EnemyToRemove.ID].Enqueue(EnemyToRemove); //puts removed enemy back into queue eg sleeping
-        EnemyToRemove.gameObject.SetActive(false); 
+        EnemyObjectPools[EnemyToRemove.ID].Enqueue(EnemyToRemove); //puts removed enemy back into queue for reuse
+        EnemyToRemove.gameObject.SetActive(false); //deactivating the enemy
+        EnemiesInGame.Remove(EnemyToRemove); //removes enemy from enemies in game list
     }
 }
