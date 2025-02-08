@@ -12,10 +12,11 @@ public class GameLoopManager : MonoBehaviour
     private void Start()
     {
         _enemyIDsToSummon = new Queue<int>();
+        _enemiesToRemove = new Queue<Enemy>();
         EntitySummoner.Init();
 
-        //StartCoroutine(GameLoop());
-        //InvokeRepeating("SummonTest", 0f, 1f);
+        StartCoroutine(GameLoop());
+        InvokeRepeating("SummonTest", 0f, 3f);
     }
 
     void SummonTest()
@@ -27,6 +28,7 @@ public class GameLoopManager : MonoBehaviour
     {
         while (endLoop == false)
         {
+
             //Spawn enemies
 
             if (_enemyIDsToSummon.Count > 0)
@@ -41,6 +43,8 @@ public class GameLoopManager : MonoBehaviour
 
             //Move enemies
 
+            //Moving via navmesh in their script
+
             //Tick towers
 
             //Apply effects
@@ -48,6 +52,14 @@ public class GameLoopManager : MonoBehaviour
             //Damage enemies
 
             //Remove enemies
+            for (int i = 0; i < EntitySummoner.EnemiesInGame.Count; i++)
+            {
+                //Checks whether any enemies have reached the base and enqueues to remove if so
+                if (EntitySummoner.EnemiesInGame[i].endReached == true)
+                {
+                    EnqueueEnemyToRemove(EntitySummoner.EnemiesInGame[i]);
+                }
+            }
 
             if (_enemiesToRemove.Count > 0)
             {

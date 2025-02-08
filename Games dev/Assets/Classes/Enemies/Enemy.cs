@@ -10,16 +10,19 @@ public class Enemy : MonoBehaviour
     public float currentHP;
     public float Speed;
     public int ID;
+    public bool endReached;
 
     public void Init()
     {
+        endReached = false;
         currentHP = maxHP;
         setDestToBase();
     }
 
     public void setDestToBase()
     {
-        GameObject.FindWithTag("Base").transform.position = _destination; //finds the base via tag
+        _destination = GameObject.FindWithTag("Base").transform.position; //finds the base via tag
+        Debug.Log(_destination);
         _agent.SetDestination(_destination); //set desination to the base
         //Debug.Log(_destination);
     }

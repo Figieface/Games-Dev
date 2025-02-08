@@ -9,11 +9,13 @@ public class EntitySummoner : MonoBehaviour
 
     private static bool _isInitialised;
 
+    private Vector3 testVec;
+
     public static void Init()
     {
         if (!_isInitialised)
         {
-            EnemyPrefabs = new Dictionary<int, GameObject>();
+            EnemyPrefabs = new Dictionary<int, GameObject>();//Dictionaries are just pair srucs basically
             EnemyObjectPools = new Dictionary<int, Queue<Enemy>>();
             EnemiesInGame = new List<Enemy>();
 
@@ -35,6 +37,7 @@ public class EntitySummoner : MonoBehaviour
     public static Enemy SummonEnemy(int EnemyID)
     {
         Enemy SummonedEnemy = null;
+        var testVec = new Vector3(5, 2, 7);
 
         if (EnemyPrefabs.ContainsKey(EnemyID))
         {
@@ -45,15 +48,15 @@ public class EntitySummoner : MonoBehaviour
                 //Dequeue enemy and init
 
                 SummonedEnemy = ReferencedQueue.Dequeue();
+                SummonedEnemy.transform.position = testVec;
+                SummonedEnemy.gameObject.SetActive(true);//reactivating our recycled enemy
                 SummonedEnemy.Init();
-
-                SummonedEnemy.gameObject.SetActive(true); //reactivating our recycled enemy
             }
             else
             {
                 //Instantate new instance of enemy and init
-
-                GameObject NewEnemy = Instantiate(EnemyPrefabs[EnemyID], Vector3.zero, Quaternion.identity); //creating new enemy as none to reuse
+                //Vector3.zero is the spawn poin will need to set this
+                GameObject NewEnemy = Instantiate(EnemyPrefabs[EnemyID], testVec, Quaternion.identity); //creating new enemy as none to reuse
                 SummonedEnemy = NewEnemy.GetComponent<Enemy>();
                 SummonedEnemy.Init();
             }
