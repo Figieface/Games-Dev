@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5196535263057714448}
   - component: {fileID: 869230031670513770}
   - component: {fileID: 8094974144489628964}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BasicEnemy 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53,6 +53,7 @@ MonoBehaviour:
   currentHP: 0
   Speed: 4
   ID: 0
+  endReached: 0
 --- !u!195 &5196535263057714448
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -137,7 +138,7 @@ GameObject:
   - component: {fileID: 5965595794598693730}
   - component: {fileID: 8899287631719424687}
   - component: {fileID: 6345396034954081771}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
