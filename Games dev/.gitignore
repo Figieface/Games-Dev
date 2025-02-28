@@ -70,3 +70,9 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+#Kenney packs
+/[Aa]ssets/[Mm]odels/[Kk]enney[Cc]astle/
+/[Aa]ssets/[Mm]odels/[Kk]enney[Ff]antasy/
+/[Aa]ssets/[Mm]odels/[Kk]enney[Ss]urvival/
+/[Aa]ssets/[Mm]odels/[Kk]enney[Tt][Dd]/
