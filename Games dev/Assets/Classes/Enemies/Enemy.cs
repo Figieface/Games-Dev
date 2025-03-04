@@ -27,7 +27,7 @@ public class Enemy : MonoBehaviour
     public void setDestToBase()
     {
         _destination = GameObject.FindWithTag("Base").transform.position; //finds the base via tag
-        Debug.Log(_destination);
+        //Debug.Log(_destination);
         _agent.SetDestination(_destination); //set desination to the base
         //Debug.Log(_destination);
     }

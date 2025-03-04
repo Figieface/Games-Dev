@@ -23,6 +23,7 @@ public class EntitySummoner : MonoBehaviour
 
             foreach (EnemySummonData enemy in Enemies)
             {
+                Debug.Log(enemy);
                 EnemyPrefabs.Add(enemy.EnemyId, enemy.EnemyPrefab);
                 EnemyObjectPools.Add(enemy.EnemyId, new Queue<Enemy>());
             }
@@ -68,6 +69,7 @@ public class EntitySummoner : MonoBehaviour
         }
         EnemiesInGame.Add(SummonedEnemy);
         SummonedEnemy.ID = EnemyID; //summoned enemy ID is the one we passed ino method
+        //Debug.Log(SummonedEnemy.maxHP);
         return SummonedEnemy;
     }
 
