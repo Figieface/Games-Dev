@@ -34,6 +34,19 @@ public class GridData
         }
         return returnVal;
     }
+
+    public bool CanPlaceObjectAt(Vector3Int gridPosition, Vector2Int objectSize)
+    {
+        List<Vector3Int> positionToOccupy = CalculatePositions(gridPosition, objectSize);
+        foreach (var position in positionToOccupy)
+        {
+            if (placedObjects.ContainsKey(position))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
 }
 
 public class PlacementData

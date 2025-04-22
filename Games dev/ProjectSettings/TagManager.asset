@@ -8,6 +8,7 @@ TagManager:
   - CannotPlace
   - Base
   - Enemy
+  - PreviewSquare
   layers:
   - Default
   - TransparentFX

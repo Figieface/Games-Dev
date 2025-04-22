@@ -23,7 +23,7 @@ public class EntitySummoner : MonoBehaviour
 
             foreach (EnemySummonData enemy in Enemies)
             {
-                Debug.Log(enemy);
+                //Debug.Log(enemy);
                 EnemyPrefabs.Add(enemy.EnemyId, enemy.EnemyPrefab);
                 EnemyObjectPools.Add(enemy.EnemyId, new Queue<Enemy>());
             }
