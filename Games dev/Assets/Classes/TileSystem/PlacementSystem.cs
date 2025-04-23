@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlacementSystemm : MonoBehaviour
 {
-    [SerializeField] private GameObject _mouseIndicator, cellIndicator;
+    [SerializeField] private GameObject _mouseIndicator;
     [SerializeField] private InputManager _inputManager;
     [SerializeField] private Grid grid;
 
@@ -14,19 +14,21 @@ public class PlacementSystemm : MonoBehaviour
 
     [SerializeField] private GameObject gridVisualisation;
 
-    [SerializeField] private Material whiteGrid, redGrid;
+    [SerializeField] private Material whiteGrid;
     [SerializeField] private GameObject previewGrid;
 
     private GridData structureData;
-    private Renderer previewRenderer;
 
     private List<GameObject> placedGameObjects = new();
+
+    [SerializeField] private PreviewSystem preview;
+
+    private Vector3Int lastDetectedPosition = Vector3Int.zero;
 
     private void Start()
     {
         StopPlacement();
         structureData = new();
-        previewRenderer = previewGrid.GetComponent<Renderer>();
     }
 
     public void StartPlacement(int ID)
@@ -39,7 +41,7 @@ public class PlacementSystemm : MonoBehaviour
             return;
         }
         gridVisualisation.SetActive(true);
-        cellIndicator.SetActive(true);
+        preview.StartShowingPlacementPreview(database.objectsData[selectedObjectIndex].Prefab, database.objectsData[selectedObjectIndex].Size);
         _inputManager.OnClicked += PlaceStructure;
         _inputManager.OnExit += StopPlacement;
     }
@@ -54,11 +56,15 @@ public class PlacementSystemm : MonoBehaviour
         if (placementValidity == false) return;
 
         GameObject newObject = Instantiate(database.objectsData[selectedObjectIndex].Prefab);
-        Vector3 yOffset = new Vector3(-0.1f, 0.0f, 0.0f);
-        newObject.transform.position = grid.CellToWorld(gridPosition) + yOffset;
+        newObject.transform.position = grid.CellToWorld(gridPosition);
         placedGameObjects.Add(newObject);
         GridData selectedData = structureData;
-        selectedData.AddObjectAt(gridPosition, database.objectsData[selectedObjectIndex].Size, database.objectsData[selectedObjectIndex].ID, placedGameObjects.Count - 1); 
+        selectedData.AddObjectAt(gridPosition,
+            database.objectsData[selectedObjectIndex].Size,
+            database.objectsData[selectedObjectIndex].ID,
+            placedGameObjects.Count - 1);
+        preview.UpdatePosition(grid.CellToWorld(gridPosition), false);
+
     }
 
     private bool CheckPlacementValidity(Vector3Int gridPosition, int selectedObjectIndex)
@@ -71,9 +77,10 @@ public class PlacementSystemm : MonoBehaviour
     {
         selectedObjectIndex = -1;
         gridVisualisation.SetActive(false);
-        cellIndicator.SetActive(false);
+        preview.StopShowingPreview();
         _inputManager.OnClicked -= PlaceStructure;
         _inputManager.OnExit -= StopPlacement;
+        lastDetectedPosition = Vector3Int.zero;
     }
 
     private void Update()
@@ -81,21 +88,13 @@ public class PlacementSystemm : MonoBehaviour
         if (selectedObjectIndex < 0) return;
         Vector3 mousePosition = _inputManager.GetSelectedMapPosition(); //mouse position using our raycas method in inputmanager
         Vector3Int gridPosition = grid.WorldToCell(mousePosition);
-
-        bool placementValidity = CheckPlacementValidity(gridPosition, selectedObjectIndex);
-
-        if (!placementValidity)
+        if(lastDetectedPosition != gridPosition)
         {
-            previewRenderer.material = redGrid;
-        }
-        else
-        {
-            previewRenderer.material = whiteGrid;
-        }
-        //previewRenderer.material.color = placementValidity ? Color.white : Color.red;
+            bool placementValidity = CheckPlacementValidity(gridPosition, selectedObjectIndex);
 
-        _mouseIndicator.transform.position = mousePosition;
-        Vector3 yOffset = new Vector3(0.0f, 0.05f, 0.0f);
-        cellIndicator.transform.position = grid.CellToWorld(gridPosition) + yOffset;
+            _mouseIndicator.transform.position = mousePosition;
+
+            preview.UpdatePosition(grid.CellToWorld(gridPosition), placementValidity);
+        }
     }
 }
