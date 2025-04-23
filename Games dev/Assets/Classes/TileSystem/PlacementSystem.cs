@@ -45,6 +45,15 @@ public class PlacementSystemm : MonoBehaviour
         _inputManager.OnExit += StopPlacement;
     }
 
+    public void StartRemoving()
+    {
+        StopPlacement();
+        gridVisualisation.SetActive(true);
+        buildingState = new RemovingState(grid, preview, structureData, objectPlacer);
+        _inputManager.OnClicked += PlaceStructure;
+        _inputManager.OnExit += StopPlacement;
+    }
+
     private void PlaceStructure()
     {
         if (_inputManager.IsPointOverUI()) return;
