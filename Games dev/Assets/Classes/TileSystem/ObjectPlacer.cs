@@ -6,16 +6,23 @@ public class ObjectPlacer : MonoBehaviour
 {
     private List<GameObject> placedGameObjects = new();
 
-    public int PlaceObject(GameObject prefab, Vector3 position)
+    public int PlaceObject(GameObject prefab, Vector3 position) //instantises prefab, puts it in position, and adds it to placed objects list
     {
         GameObject newObject = Instantiate(prefab);
         newObject.transform.position = position;
-        placedGameObjects.Add(newObject);
+        int nullindex = placedGameObjects.FindIndex(obj => obj == null); //seeing if there are any null entries (been removed)
+        if (nullindex != -1)
+        {
+            placedGameObjects[nullindex] = newObject; //set it to the index null is at
+        } else
+        {
+            placedGameObjects.Add(newObject); //else new object add
+        }
 
-        return placedGameObjects.Count - 1;
+        return placedGameObjects.Count - 1; //returns the index added at
     }
 
-    internal void RemoveObjectAt(int gameObjectIndex)
+    internal void RemoveObjectAt(int gameObjectIndex) //removes object in list via its index
     {
         if (placedGameObjects.Count <= gameObjectIndex) 
             return;

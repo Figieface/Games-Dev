@@ -14,6 +14,7 @@ public class InputManager : MonoBehaviour
 
     private void Update()
     {
+        //just if statments to listen for actions
         if (Input.GetMouseButtonDown(0))
         {
             OnClicked?.Invoke();
@@ -26,7 +27,7 @@ public class InputManager : MonoBehaviour
 
     public bool IsPointOverUI() => EventSystem.current.IsPointerOverGameObject();
 
-    public Vector3 GetSelectedMapPosition()
+    public Vector3 GetSelectedMapPosition() //gives position where mouse is hovering over by ray projected at mouse
     {
         Vector3 mousePos = Input.mousePosition;
         mousePos.z = _sceneCamera.nearClipPlane; //cannot select objects not in camera render

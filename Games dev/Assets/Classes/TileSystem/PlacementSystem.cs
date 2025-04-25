@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlacementSystemm : MonoBehaviour
 {
-    [SerializeField] private InputManager _inputManager;
+    [SerializeField] private InputManager inputManager;
     [SerializeField] private Grid grid;
 
     [SerializeField] private ObjectDBSO database;
@@ -31,7 +31,7 @@ public class PlacementSystemm : MonoBehaviour
         structureData = new();
     }
 
-    public void StartPlacement(int ID)
+    public void StartPlacement(int ID) //method that building button calls, creates new placementstate
     {
         StopPlacement();
         gridVisualisation.SetActive(true);
@@ -41,41 +41,35 @@ public class PlacementSystemm : MonoBehaviour
                                            database,
                                            structureData,
                                            objectPlacer);
-        _inputManager.OnClicked += PlaceStructure;
-        _inputManager.OnExit += StopPlacement;
+        inputManager.OnClicked += PlaceStructure;
+        inputManager.OnExit += StopPlacement;
     }
 
-    public void StartRemoving()
+    public void StartRemoving() //method that remove button calls, creates new removestate
     {
         StopPlacement();
         gridVisualisation.SetActive(true);
         buildingState = new RemovingState(grid, preview, structureData, objectPlacer);
-        _inputManager.OnClicked += PlaceStructure;
-        _inputManager.OnExit += StopPlacement;
+        inputManager.OnClicked += PlaceStructure;
+        inputManager.OnExit += StopPlacement;
     }
 
     private void PlaceStructure()
     {
-        if (_inputManager.IsPointOverUI()) return;
-        Vector3 mousePosition = _inputManager.GetSelectedMapPosition(); //mouse position using our raycas method in inputmanager
+        if (inputManager.IsPointOverUI()) return;
+        Vector3 mousePosition = inputManager.GetSelectedMapPosition(); //mouse position using our raycas method in inputmanager
         Vector3Int gridPosition = grid.WorldToCell(mousePosition);
 
         buildingState.OnAction(gridPosition);
     }
 
-    //private bool CheckPlacementValidity(Vector3Int gridPosition, int selectedObjectIndex)
-    //{
-    //    GridData selectedData = structureData;
-    //    return selectedData.CanPlaceObjectAt(gridPosition, database.objectsData[selectedObjectIndex].Size);
-    //}
-
-    private void StopPlacement()
+    private void StopPlacement() 
     {
         if(buildingState == null) return;
-        gridVisualisation.SetActive(false);
-        buildingState.EndState();
-        _inputManager.OnClicked -= PlaceStructure;
-        _inputManager.OnExit -= StopPlacement;
+        gridVisualisation.SetActive(false); //turn off grid shader
+        buildingState.EndState(); //end build state
+        inputManager.OnClicked -= PlaceStructure;
+        inputManager.OnExit -= StopPlacement;
         lastDetectedPosition = Vector3Int.zero;
         buildingState = null;
     }
@@ -83,9 +77,9 @@ public class PlacementSystemm : MonoBehaviour
     private void Update()
     {
         if (buildingState == null) return;
-        Vector3 mousePosition = _inputManager.GetSelectedMapPosition(); //mouse position using our raycas method in inputmanager
+        Vector3 mousePosition = inputManager.GetSelectedMapPosition(); //mouse position using our raycas method in inputmanager
         Vector3Int gridPosition = grid.WorldToCell(mousePosition);
-        if(lastDetectedPosition != gridPosition)
+        if(lastDetectedPosition != gridPosition) //if we dont change where mouse is it wont run updatestate
         {
             buildingState.UpdateState(gridPosition);
 
