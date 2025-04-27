@@ -14,12 +14,12 @@ public class ObjectPlacer : MonoBehaviour
         if (nullindex != -1)
         {
             placedGameObjects[nullindex] = newObject; //set it to the index null is at
+            return nullindex; //returns index added at
         } else
         {
             placedGameObjects.Add(newObject); //else new object add
+            return placedGameObjects.Count - 1; //returns the index added at
         }
-
-        return placedGameObjects.Count - 1; //returns the index added at
     }
 
     internal void RemoveObjectAt(int gameObjectIndex) //removes object in list via its index

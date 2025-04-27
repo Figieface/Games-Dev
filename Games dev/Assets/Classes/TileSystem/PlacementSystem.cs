@@ -15,7 +15,7 @@ public class PlacementSystemm : MonoBehaviour
     [SerializeField] private Material whiteGrid;
     [SerializeField] private GameObject previewGrid;
 
-    private GridData structureData;
+    public GridData structureData;
 
     [SerializeField] private PreviewSystem preview;
 
@@ -25,10 +25,14 @@ public class PlacementSystemm : MonoBehaviour
 
     IBuildingState buildingState;
 
+    private void Awake()
+    {
+        structureData = new();
+    }
+
     private void Start()
     {
         StopPlacement();
-        structureData = new();
     }
 
     public void StartPlacement(int ID) //method that building button calls, creates new placementstate
@@ -85,5 +89,15 @@ public class PlacementSystemm : MonoBehaviour
 
             lastDetectedPosition = gridPosition;
         }
+    }
+
+    public bool IsWalkable(Vector3Int gridPosition)
+    {
+        foreach (var gridpos in structureData.placedObjects)
+        {
+            if (gridpos.Value.occupiedPositions.Contains(gridPosition)) //checking occupied positions
+                return false; //structure in that grid pos
+        }
+        return true; //nothing in the grid pos
     }
 }

@@ -45,7 +45,7 @@ public class RemovingState : IBuildingState //inheriting from interface
             if (gameObjectIndex == -1)
                 return;
             selectedData.RemoveObjectAt(gridPosition); //remove actual prefab
-            objectPlacer.RemoveObjectAt(gameObjectIndex); //remove it from our objectindex
+            objectPlacer.RemoveObjectAt(gameObjectIndex); //remove it from our object list
         }
         Vector3 cellPosition = grid.CellToWorld(gridPosition);
         previewSystem.UpdatePosition(cellPosition, CheckIfSelectionIsValid(gridPosition));

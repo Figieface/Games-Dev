@@ -6,13 +6,13 @@ using UnityEngine.UIElements;
 
 public class GridData
 {
-    Dictionary<Vector3Int, PlacementData> placedObjects = new(); //Dictionary with the location(vec3) on the grid(int), and placementdata (grid spaces it occupies, object ID, index in list of placed objects)
+    public Dictionary<Vector3Int, PlacementData> placedObjects = new(); //Dictionary with the location(vec3) on the grid(int), and placementdata (grid spaces it occupies, object ID, index in list of placed objects)
 
     public void AddObjectAt(Vector3Int gridPosition, Vector2Int objectSize, int ID, int placedObjectIndex) //adds object data to dictionary of placed objects
     {
-        List<Vector3Int> positionToOccupy = CalculatePositions(gridPosition, objectSize); 
+        List<Vector3Int> positionToOccupy = CalculatePositions(gridPosition, objectSize);
         PlacementData data = new PlacementData(positionToOccupy, ID, placedObjectIndex);
-        foreach (var position in positionToOccupy) 
+        foreach (var position in positionToOccupy)
         {
             if (placedObjects.ContainsKey(position)) //if user somehow places an object ontop of another
             {
@@ -50,17 +50,31 @@ public class GridData
 
     internal int GetRepresentationIndex(Vector3Int gridPosition) //finds object via the space it takes up on the grid
     {
-        if (placedObjects.ContainsKey(gridPosition) == false) 
+        if (placedObjects.ContainsKey(gridPosition) == false)
             return -1;
         return placedObjects[gridPosition].PlacedObjectIndex;
     }
 
     internal void RemoveObjectAt(Vector3Int gridPosition) //removes object position data in placed objects
     {
-        foreach(var position in placedObjects[gridPosition].occupiedPositions)
+        foreach (var position in placedObjects[gridPosition].occupiedPositions)
         {
             placedObjects.Remove(position);
         }
+    }
+
+    public List<Vector3Int> BlockedPositions()
+    {
+        List<Vector3Int> allOccupiedPositions = new List<Vector3Int>();
+
+        foreach (var placedObject in placedObjects)
+        {
+            allOccupiedPositions.AddRange(placedObject.Value.occupiedPositions);
+        }
+
+        if (allOccupiedPositions.Count == 0) return null;
+
+        return allOccupiedPositions;
     }
 }
 
