@@ -6,24 +6,30 @@ public class WaveManager : MonoBehaviour
 {
 
     [SerializeField] Pathfinding pathfinding;
+    [SerializeField] WaveSpawner waveSpawner;
 
-    [SerializeField] private bool getTheWaypoints;
+    [SerializeField] private bool addWave;
     [SerializeField] public List<Vector3Int> myWaypoints; //can turn to private once method made to send these to enemies
     Vector3Int mySpawnpoint, myDestination;
 
+
+    private void Start()
+    {
+        myDestination = new Vector3Int(0, 0, 0);
+        mySpawnpoint = new Vector3Int(10, 0, 10);
+    }
     private void Update()
     {
-        if (getTheWaypoints == true)
+        if (addWave == true)
         {
-            myDestination = new Vector3Int(0, 0, 0);
-            mySpawnpoint = new Vector3Int(10,0,10);
-            myWaypoints = GetWaypoints(mySpawnpoint, myDestination);
-            getTheWaypoints = false;
+            SpawnAWave(0,10,3,mySpawnpoint);
+            addWave = false;
         }
     }
     //NOTE THAT currently pathfinder has a bool to generate the grid to start
     private List<Vector3Int> GetWaypoints(Vector3Int spawnPoint, Vector3Int endPoint) //method to reduce amount of waypoints, so enemies can just head to corners of the path + end
     {
+        //Debug.Log("GetWaypoints has ran");
         List<Vector3Int> waypoints = new();
         List<Vector3Int> path = pathfinding.GenGridandPath(spawnPoint, endPoint); //returns vec list of positions to get to 0,0,0 using a* 
         for (int i = path.Count - 2; i > 0; i--) //i starts at 1 (to skip spawnpoint) as you will always go straight from spawn no matter which way it paths
@@ -51,5 +57,11 @@ public class WaveManager : MonoBehaviour
             Mathf.Abs(v3.y),
             Mathf.Abs(v3.z)
         );
+    }
+
+    private void SpawnAWave(int ID, int enemyCount, float spawnsPerSec, Vector3Int spawn) //input the ID so it can get the prefab from enemyDB, enemy count to set the count and can choose spawn locations
+    {
+        List<Vector3Int> wavePath = GetWaypoints(spawn, myDestination); 
+        waveSpawner.WaveFromManager(ID, enemyCount, spawnsPerSec, spawn, wavePath);
     }
 }

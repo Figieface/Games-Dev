@@ -10,29 +10,30 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField] Transform pivot;
     private float rotationSpeed = 12.0f;
 
-    [SerializeField] private List<Vector3Int> enemyWaypoints;
+    [SerializeField] public List<Vector3Int> enemyWaypoints; //should be set by the spawn method in wavespawner
 
     private Vector3Int endPoint;
     private int waypointIndex = 0;
 
-    [SerializeField] bool startMove, getWaypoints;
+    private void Awake()
+    {
+        //enemyWaypoints.Add(Vector3Int.FloorToInt(transform.position));
+        waveManager = FindFirstObjectByType<WaveManager>();
+    }
+
+    private void Start()
+    {
+        endPoint = enemyWaypoints[enemyWaypoints.Count - 1];
+    }
 
     private void Update()
     {
-        if (getWaypoints == true)
-        {
-            enemyWaypoints = waveManager.myWaypoints; //getting path from wavemanager
-            endPoint = enemyWaypoints[enemyWaypoints.Count - 1]; 
-            getWaypoints = false;
-        }
-        if (startMove == true)
-        {
-            Path();
-        }
+        Path();
     }
 
     private void Path()
     {
+
         Vector3 targetPosition = (Vector3)enemyWaypoints[waypointIndex]; //casting target position to be vec3
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime); //move
 
@@ -44,17 +45,16 @@ public class EnemyMovement : MonoBehaviour
             pivot.rotation = Quaternion.Slerp(pivot.rotation, targetRotation, rotationSpeed * Time.deltaTime); //rotate to target dir
         }
 
-        if (Vector3.Distance(transform.position, targetPosition) < 0.1f) //if within 0.2f of the target
+        if (Vector3.Distance(transform.position, targetPosition) < 0.05f) //if within 0.2f of the target
         {
+            waypointIndex++; //iterates
+
             if (waypointIndex >= enemyWaypoints.Count)
             {
                 Destroy(gameObject);//destroys itself
                 return;
                 //will need to 'die' and do damage
             }
-
-            waypointIndex++; //iterates
-
         }
     }
 }
