@@ -11,9 +11,6 @@ public class Pathfinding : MonoBehaviour
     private int gridHeight = 100, gridWidth = 100;
     private int cellHeight= 1, cellWidth = 1;
 
-    [SerializeField] private bool generatePath;
-    private bool pathGenerated;
-
     private Dictionary<Vector3Int, Cell> cells;
     [SerializeField] private List<Vector3Int> cellsToSearch;
     [SerializeField] private List<Vector3Int> searchedCells;
@@ -25,19 +22,11 @@ public class Pathfinding : MonoBehaviour
     {
         structureData = placementData.structureData;
     }
-    private void Update()
+
+    public List<Vector3Int> GenGridandPath(Vector3Int startPos, Vector3Int endPos)
     {
-        //Debug.Log(placementData.structureData);
-        if (generatePath && !pathGenerated)
-        {
-            GenerateGrid();
-            FindPath(new Vector3Int(10, 0, 10), new Vector3Int(0, 0, 0));
-            pathGenerated = true;
-        }
-        else if (!generatePath)
-        {
-            pathGenerated = false;
-        }
+        GenerateGrid();
+        return FindPath(startPos, endPos);
     }
 
     private void GenerateGrid()
@@ -46,7 +35,7 @@ public class Pathfinding : MonoBehaviour
         //Debug.Log(cells);
         List<Vector3Int> walls = structureData.BlockedPositions(); //getting all taken up positions
 
-        Debug.Log(walls);
+        //Debug.Log(walls);
 
         for (int x = 0; x < gridWidth; x += cellWidth)
         {
@@ -60,23 +49,19 @@ public class Pathfinding : MonoBehaviour
 
                 if (walls == null)
                 {
-                    Debug.Log("No walls placed yet");
+                    //no walls placed yet
                 }
                 else if (walls.Contains(position)) //if the cell position is in the blockedpositions list
                 {
                     cells[position].isWall = true;
                 }
-                else
-                {
-                    Debug.Log("walls isnt null, but also couldnt find the wall position on grid");
-                }
             }
         }
     }
 
-    private void FindPath(Vector3Int startPos, Vector3Int endPos)
+    private List<Vector3Int> FindPath(Vector3Int startPos, Vector3Int endPos)
     {
-        Debug.Log("func FindPath called");
+        //Debug.Log("func FindPath called");
 
         searchedCells = new List<Vector3Int>();
         cellsToSearch = new List<Vector3Int> {startPos};
@@ -116,11 +101,12 @@ public class Pathfinding : MonoBehaviour
 
                 }
                 finalPath.Add(startPos);
-                return;
+                return finalPath;
             }
 
             SearchCellNeighbours(cellToSearch, endPos);
         }
+        return null; //could only happen if destination not reachable
     }
 
     private void SearchCellNeighbours(Vector3Int cellPos, Vector3Int endPos)
