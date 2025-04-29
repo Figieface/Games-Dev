@@ -1,9 +1,6 @@
-using System;
+
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using Unity.VisualScripting.FullSerializer;
-using UnityEditor;
 using UnityEngine;
 
 
@@ -13,13 +10,13 @@ public class WaveSpawner : MonoBehaviour
     {
         public string name;
         public GameObject enemy; //prefab
-        public int count;
+        public int count, waveGroup;
         public float spawnRate;
         public Vector3Int spawnPoint;
         public List<Vector3Int> path;
 
 
-        public Wave(string name, GameObject enemy, int count, float spawnRate, Vector3Int spawnPoint, List<Vector3Int> path) //constructor
+        public Wave(string name, GameObject enemy, int count, float spawnRate, Vector3Int spawnPoint, List<Vector3Int> path, int waveGroup) //constructor
         {
             this.name = name;
             this.enemy = enemy;
@@ -27,17 +24,20 @@ public class WaveSpawner : MonoBehaviour
             this.spawnRate = spawnRate;
             this.spawnPoint = spawnPoint;
             this.path = path;
+            this.waveGroup = waveGroup;
         }
     }
 
     [SerializeField] private EnemyDBSO enemyDatabase;
 
-    public enum SpawnState {SPAWNING, WAITING, COUNTING};
+    public enum SpawnState {SPAWNING, WAITING, COUNTING, BETWEENROUNDS};
 
     public List<Wave> waves;
-    private int nextWave = 0;
-    public float timeBetweenWaves = 2f; //between waves of individual spawns- i will call what is normally a wave a 'round' for clarity
+    private bool nextWaveGroupExists = true;
+    public float timeBetweenWaves = 2f; //time between wave groups
     public float waveCountdown;
+    private int currentWaveGroup = 0;
+
 
     public GameObject[] spawnPoints;
 
@@ -57,10 +57,9 @@ public class WaveSpawner : MonoBehaviour
         {
             if (state == SpawnState.WAITING)
             {
-                if (!EnemyIsAlive())
+                if (!EnemyIsAlive()) //check if enemies alive every 2 seconds
                 {
-                    //new round starts
-                    WaveCompleted();
+                    RoundCompleted();
                     return;
                 }
                 else
@@ -69,21 +68,23 @@ public class WaveSpawner : MonoBehaviour
                 }
             }
 
-            if (waveCountdown <= 0) //if wave count down is still going
+            if (waveCountdown <= 0 && nextWaveGroupExists == true) //if wave count down is still going
             {
                 if (state != SpawnState.SPAWNING)
                 {
-                    StartCoroutine(SpawnWave(waves[nextWave])); //spawn wave method
+                    
+                    //StartCoroutine(SpawnWave(waves[nextWaveGroupExists])); //spawn wave method
+                    StartCoroutine(SpawnWaveGroups());
                 }
             }
             else
             {
-                waveCountdown -= Time.deltaTime; //else cotinue countdown
+                waveCountdown -= Time.deltaTime; //else continue countdown
             }
         }
     }
 
-    public void WaveFromManager(int ID, int enemyCount, float spawnsPerSec, Vector3Int spawn, List<Vector3Int> wavePath)
+    public void WaveFromManager(int ID, int enemyCount, float spawnsPerSec, Vector3Int spawn, List<Vector3Int> wavePath, int waveGroup)
     {
         int selectedEnemy = enemyDatabase.enemyData.FindIndex(data => data.ID == ID);  //gets index in the DB of the enemy ID passed
         Wave newWave = new Wave( //creating new wave from the data from wavemanager
@@ -92,26 +93,19 @@ public class WaveSpawner : MonoBehaviour
             enemyCount,
             spawnsPerSec,
             spawn,
-            wavePath);
+            wavePath,
+            waveGroup);
         waves.Add(newWave);
     }
 
-    private void WaveCompleted()
+    private void RoundCompleted()
     {
-        Debug.Log("Wave completed");
-
+        Debug.Log("Round completed");
         state = SpawnState.COUNTING;
-        waveCountdown = timeBetweenWaves;
-        if (nextWave+1 > waves.Count-1) //if no more waves
-        {
-            nextWave = 0;
-            Debug.Log("All waves complete");
-        }
-        else
-        {
-            nextWave++;
-        }
-        
+        waves.Clear(); //clearing waves for next round
+        currentWaveGroup = 0; //resetting currentWaveGroup for next round
+        nextWaveGroupExists = true; //nextwavegroup will exist next round
+        allowSpawning = false;
     }
 
     private bool EnemyIsAlive() //checking whether any enemies are alive
@@ -128,21 +122,60 @@ public class WaveSpawner : MonoBehaviour
         return true; //if there were enemys then bool is true
     }
 
+    IEnumerator SpawnWaveGroups()
+    {
+        List<Wave> currentWaves = GetWaves(currentWaveGroup);
+
+        if (currentWaves.Count == 0) //no waves found in group
+        {
+            yield break;
+        }
+        state = SpawnState.SPAWNING;
+        List<Coroutine> wavesSpawning = new List<Coroutine>();
+
+        foreach (Wave wave in currentWaves) //starts all wave spawn coroutines in group
+        {
+            Coroutine waveCoroutine = StartCoroutine(SpawnWave(wave));
+            wavesSpawning.Add(waveCoroutine);
+        }
+
+        foreach (Coroutine waveCoroutine in wavesSpawning) //wait for enemies to finish spawning
+        {
+            yield return waveCoroutine;
+        }
+
+        currentWaveGroup++;
+        waveCountdown = timeBetweenWaves;
+        state = SpawnState.COUNTING;
+        if (nextWaveGroupExists == false) //if theres no next wave we need to wait for enemies to die
+        {
+            state = SpawnState.WAITING; 
+        }
+    }
+
+    private List<Wave> GetWaves(int waveGroupNum) //method to return all waves with a specific wavenum
+    {
+        List<Wave> groupWaveList = new();
+        foreach (Wave wave in waves)
+        {
+            if (wave.waveGroup == waveGroupNum) //getting waves of a certain group number
+            {
+                groupWaveList.Add(wave);
+            }
+        }
+        nextWaveGroupExists = waves.Exists(wave => wave.waveGroup == waveGroupNum + 1); //goes false if theres no next wave group- last wave is being spawned
+        return groupWaveList;
+    }
+
     IEnumerator SpawnWave(Wave wave)
     {
-        Debug.Log("Spawning wave: "+wave.name);
-        state = SpawnState.SPAWNING;
-
-        for (int i = 0; i < wave.count; i++) //while theres still waves left
+        Debug.Log("Spawning wave: "+wave.name+" x"+wave.count);
+        for (int i = 0; i < wave.count; i++) //while theres still enemies to spawn
         {
             //Debug.Log(wave.path);
             SpawnEnemy(wave.enemy, wave.path, wave.spawnPoint);
             yield return new WaitForSeconds(1f/wave.spawnRate);
         }
-
-        state = SpawnState.WAITING;
-
-        yield break;
     }
 
     private void SpawnEnemy(GameObject enemy, List<Vector3Int> path, Vector3Int spawn) //once enemy class created gameobjects will need to be chnaged to that

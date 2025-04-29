@@ -10,19 +10,23 @@ public class WaveManager : MonoBehaviour
 
     [SerializeField] private bool addWave;
     [SerializeField] public List<Vector3Int> myWaypoints; //can turn to private once method made to send these to enemies
-    Vector3Int mySpawnpoint, myDestination;
+    Vector3Int mySpawnpoint, myDestination, mySecondSpawn;
 
 
     private void Start()
     {
         myDestination = new Vector3Int(0, 0, 0);
         mySpawnpoint = new Vector3Int(10, 0, 10);
+        mySecondSpawn = new Vector3Int(-10, 0, -10);
     }
     private void Update()
     {
         if (addWave == true)
         {
-            SpawnAWave(0,10,3,mySpawnpoint);
+            SpawnAWave(0,10,3,mySpawnpoint,0);
+            SpawnAWave(0, 4, 1, mySecondSpawn, 0);
+            SpawnAWave(0, 3, 2, mySpawnpoint, 1);
+            SpawnAWave(0, 4, 4, mySpawnpoint, 2);
             addWave = false;
         }
     }
@@ -59,9 +63,9 @@ public class WaveManager : MonoBehaviour
         );
     }
 
-    private void SpawnAWave(int ID, int enemyCount, float spawnsPerSec, Vector3Int spawn) //input the ID so it can get the prefab from enemyDB, enemy count to set the count and can choose spawn locations
+    private void SpawnAWave(int ID, int enemyCount, float spawnsPerSec, Vector3Int spawn, int waveNum) //input the ID so it can get the prefab from enemyDB, enemy count to set the count and can choose spawn locations
     {
         List<Vector3Int> wavePath = GetWaypoints(spawn, myDestination); 
-        waveSpawner.WaveFromManager(ID, enemyCount, spawnsPerSec, spawn, wavePath);
+        waveSpawner.WaveFromManager(ID, enemyCount, spawnsPerSec, spawn, wavePath, waveNum);
     }
 }
