@@ -154,8 +154,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waveManager: {fileID: 0}
+  database: {fileID: 11400000, guid: 42711b8c8527ff346b72022ab90dc1e6, type: 2}
+  moveSpeed: 1
   pivot: {fileID: 6802068945995801416}
   enemyWaypoints: []
+  damage: 1
 --- !u!1 &4025541374308457321
 GameObject:
   m_ObjectHideFlags: 0

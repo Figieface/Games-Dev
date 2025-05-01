@@ -1,15 +1,31 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ObjectPlacer : MonoBehaviour
 {
-    private List<GameObject> placedGameObjects = new();
+    [SerializeField] PlacementSystemm placementSystemm;
+    public List<GameObject> placedGameObjects = new();
 
     public int PlaceObject(GameObject prefab, Vector3 position) //instantises prefab, puts it in position, and adds it to placed objects list
     {
         GameObject newObject = Instantiate(prefab);
         newObject.transform.position = position;
+
+
+        Button[] allButtons = newObject.GetComponentsInChildren<Button>(true); // true = include inactive
+
+        foreach (Button btn in allButtons)
+        {
+            if (btn.name == "Sell")
+            {
+                Button sellButton = btn;
+                sellButton.onClick.AddListener(() => placementSystemm.SellTower());
+                break;
+            }
+        }
+
         int nullindex = placedGameObjects.FindIndex(obj => obj == null); //seeing if there are any null entries (been removed)
         if (nullindex != -1)
         {
@@ -20,6 +36,11 @@ public class ObjectPlacer : MonoBehaviour
             placedGameObjects.Add(newObject); //else new object add
             return placedGameObjects.Count - 1; //returns the index added at
         }
+    }
+
+    internal GameObject SelectObjectAt(int gameObjectindex)
+    {
+        return placedGameObjects[gameObjectindex];
     }
 
     internal void RemoveObjectAt(int gameObjectIndex) //removes object in list via its index

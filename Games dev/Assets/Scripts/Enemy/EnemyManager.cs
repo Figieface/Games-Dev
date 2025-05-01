@@ -5,8 +5,9 @@ using UnityEngine;
 public class EnemyMovement : MonoBehaviour
 {
     [SerializeField] WaveManager waveManager;
+    [SerializeField] EnemyDBSO database;
 
-    private float moveSpeed = 2.0f;
+    public float moveSpeed = 2.0f;
     [SerializeField] Transform pivot;
     private float rotationSpeed = 12.0f;
 
@@ -14,6 +15,8 @@ public class EnemyMovement : MonoBehaviour
 
     private Vector3Int endPoint;
     private int waypointIndex = 0;
+
+    public int damage;//to be changed by the spawner
 
     private void Awake()
     {
@@ -52,6 +55,8 @@ public class EnemyMovement : MonoBehaviour
             if (waypointIndex >= enemyWaypoints.Count)
             {
                 Destroy(gameObject);//destroys itself
+                Lives.DamagePlayer(damage);
+                Debug.Log("Reached end and damaged player!");
                 return;
                 //will need to 'die' and do damage
             }

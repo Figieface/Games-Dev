@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 
 public class RemovingState : IBuildingState //inheriting from interface
@@ -9,16 +10,19 @@ public class RemovingState : IBuildingState //inheriting from interface
     PreviewSystem previewSystem;
     GridData structureData;
     ObjectPlacer objectPlacer;
+    ObjectDBSO database;
 
     public RemovingState(Grid grid,
                          PreviewSystem previewSystem,
                          GridData structureData,
-                         ObjectPlacer objectPlacer)
+                         ObjectPlacer objectPlacer,
+                         ObjectDBSO database)
     {
         this.grid = grid;
         this.previewSystem = previewSystem;
         this.structureData = structureData;
         this.objectPlacer = objectPlacer;
+        this.database = database;
 
         previewSystem.StartShowingRemovePreview(); //turn on remove preview in removing state
     }
@@ -42,6 +46,8 @@ public class RemovingState : IBuildingState //inheriting from interface
         else //removes the structure from the objectindex and 
         {
             gameObjectIndex = selectedData.GetRepresentationIndex(gridPosition); //gets the index positions for the object from the grid data
+            ObjectData structure = database.objectsData.FirstOrDefault(structure => structure.ID == selectedData.placedObjects[gridPosition].ID);
+            StructureShop.currency = StructureShop.currency + Mathf.CeilToInt(structure.Cost * 0.666f);
             if (gameObjectIndex == -1)
                 return;
             selectedData.RemoveObjectAt(gridPosition); //remove actual prefab
@@ -49,6 +55,21 @@ public class RemovingState : IBuildingState //inheriting from interface
         }
         Vector3 cellPosition = grid.CellToWorld(gridPosition);
         previewSystem.UpdatePosition(cellPosition, CheckIfSelectionIsValid(gridPosition));
+    }
+
+    public void RemoveIt(Vector3Int gridPosition)
+    {
+        GridData selectedData = null;
+        selectedData = structureData;
+        gameObjectIndex = selectedData.GetRepresentationIndex(gridPosition); //gets the index positions for the object from the grid data
+        ObjectData structure = database.objectsData.FirstOrDefault(structure => structure.ID == selectedData.placedObjects[gridPosition].ID);
+        StructureShop.currency = StructureShop.currency + Mathf.CeilToInt(structure.Cost * 0.666f);
+        if (gameObjectIndex == -1)
+            return;
+        selectedData.RemoveObjectAt(gridPosition); //remove actual prefab
+        objectPlacer.RemoveObjectAt(gameObjectIndex); //remove it from our object list
+        //Vector3 cellPosition = grid.CellToWorld(gridPosition);
+        //previewSystem.UpdatePosition(cellPosition, CheckIfSelectionIsValid(gridPosition));
     }
 
     private bool CheckIfSelectionIsValid(Vector3Int gridPosition) //returns inverted canplaceobject, as object needs to be in the way to be removed

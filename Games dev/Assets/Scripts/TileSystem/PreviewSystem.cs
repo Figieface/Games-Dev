@@ -13,6 +13,8 @@ public class PreviewSystem : MonoBehaviour
 
     private Renderer cellIndicatorRenderer;
 
+    private bool enoughCurrency = true;
+
     private void Start()
     {
         previewMaterialInstance = new Material(previewMaterialsPrefab); 
@@ -20,8 +22,16 @@ public class PreviewSystem : MonoBehaviour
         cellIndicatorRenderer = cellIndicator.GetComponentInChildren<Renderer>();
     }
 
-    public void StartShowingPlacementPreview(GameObject prefab, Vector2Int size) //instatises a prefab to show as preview
+    public void StartShowingPlacementPreview(GameObject prefab, Vector2Int size, int cost) //instatises a prefab to show as preview
     {
+        if (cost > StructureShop.currency)
+        {
+            enoughCurrency = false;
+        }
+        else
+        {
+            enoughCurrency = true;
+        }
         previewObject = Instantiate(prefab);
         PreparePreview(previewObject); //makes prefab use preview material
         PrepareCursor(size); //makes grid cursor fit to size of prefab
@@ -75,6 +85,10 @@ public class PreviewSystem : MonoBehaviour
         Color c = validity ? Color.white : Color.red; //if validity true then colour white, false then red
 
         c.a = 0.5f;
+        if (enoughCurrency == false)
+        {
+            c = Color.red;
+        }
         previewMaterialInstance.color = c;
     }
 

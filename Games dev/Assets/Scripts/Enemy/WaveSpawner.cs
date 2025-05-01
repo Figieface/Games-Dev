@@ -10,13 +10,13 @@ public class WaveSpawner : MonoBehaviour
     {
         public string name;
         public GameObject enemy; //prefab
-        public int count, waveGroup;
+        public int count, waveGroup, damage;
         public float spawnRate;
         public Vector3Int spawnPoint;
         public List<Vector3Int> path;
 
 
-        public Wave(string name, GameObject enemy, int count, float spawnRate, Vector3Int spawnPoint, List<Vector3Int> path, int waveGroup) //constructor
+        public Wave(string name, GameObject enemy, int count, float spawnRate, Vector3Int spawnPoint, List<Vector3Int> path, int waveGroup, int damage) //constructor
         {
             this.name = name;
             this.enemy = enemy;
@@ -25,6 +25,7 @@ public class WaveSpawner : MonoBehaviour
             this.spawnPoint = spawnPoint;
             this.path = path;
             this.waveGroup = waveGroup;
+            this.damage = damage;
         }
     }
 
@@ -94,7 +95,8 @@ public class WaveSpawner : MonoBehaviour
             spawnsPerSec,
             spawn,
             wavePath,
-            waveGroup);
+            waveGroup,
+            enemyDatabase.enemyData[selectedEnemy].Damage);
         waves.Add(newWave);
     }
 
@@ -173,15 +175,16 @@ public class WaveSpawner : MonoBehaviour
         for (int i = 0; i < wave.count; i++) //while theres still enemies to spawn
         {
             //Debug.Log(wave.path);
-            SpawnEnemy(wave.enemy, wave.path, wave.spawnPoint);
+            SpawnEnemy(wave.enemy, wave.path, wave.spawnPoint, wave.damage);
             yield return new WaitForSeconds(1f/wave.spawnRate);
         }
     }
 
-    private void SpawnEnemy(GameObject enemy, List<Vector3Int> path, Vector3Int spawn) //once enemy class created gameobjects will need to be chnaged to that
+    private void SpawnEnemy(GameObject enemy, List<Vector3Int> path, Vector3Int spawn, int damage) //once enemy class created gameobjects will need to be chnaged to that
     {
         GameObject enemyInstance = Instantiate(enemy, spawn, transform.rotation);
         EnemyMovement moveScript = enemyInstance.GetComponent<EnemyMovement>();
+        moveScript.damage = damage;
         moveScript.enemyWaypoints = path;
         //Debug.Log(moveScript.enemyWaypoints[0]+","+ moveScript.enemyWaypoints[1]);//
     }

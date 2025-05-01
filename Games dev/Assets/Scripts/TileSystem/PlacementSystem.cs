@@ -2,6 +2,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlacementSystemm : MonoBehaviour
 {
@@ -32,6 +33,7 @@ public class PlacementSystemm : MonoBehaviour
 
     private void Start()
     {
+        gridVisualisation.SetActive(false);
         StopPlacement();
     }
 
@@ -49,13 +51,54 @@ public class PlacementSystemm : MonoBehaviour
         inputManager.OnExit += StopPlacement;
     }
 
+    public void StartSelectionState()
+    {
+        StopPlacement();
+        gridVisualisation.SetActive(true);
+        buildingState = new SelectionState(grid,
+                                  preview,
+                                  structureData,
+                                  objectPlacer);
+        inputManager.OnClicked += PlaceStructure;
+        inputManager.OnExit += StopPlacement;
+    }
+
     public void StartRemoving() //method that remove button calls, creates new removestate
     {
         StopPlacement();
         gridVisualisation.SetActive(true);
-        buildingState = new RemovingState(grid, preview, structureData, objectPlacer);
+        buildingState = new RemovingState(grid,
+                                          preview,
+                                          structureData,
+                                          objectPlacer,
+                                          database);
         inputManager.OnClicked += PlaceStructure;
         inputManager.OnExit += StopPlacement;
+    }
+
+    public void SellTower()
+    {
+        //Debug.Log("SellTower called");
+        GameObject clickedButton = EventSystem.current.currentSelectedGameObject; //gets the button
+
+        StopPlacement();
+        buildingState = new RemovingState(grid,
+                                          preview,
+                                          structureData,
+                                          objectPlacer,
+                                          database);
+        Transform buttonParent = (clickedButton.transform.parent);
+        //Vector3 parentVec3 = parentTrans.position;
+        Transform CanvasParent = buttonParent.parent;
+        Vector3 parentVec3 = CanvasParent.position;
+
+        Vector3Int gridPosition = grid.WorldToCell(parentVec3);
+        //Vector3Int gridPosition = grid.WorldToCell(mousePosition);
+
+        if (buildingState is RemovingState removeState)//have to have this check as otherwise a state without removeit could try to call it
+        {
+            removeState.RemoveIt(gridPosition);
+        }
     }
 
     private void PlaceStructure()

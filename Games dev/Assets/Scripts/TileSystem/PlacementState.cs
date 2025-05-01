@@ -29,7 +29,8 @@ public class PlacementState : IBuildingState //inheriting from interface
         {
             previewSystem.StartShowingPlacementPreview( //show preview
                 database.objectsData[selectedObjectIndex].Prefab,
-                database.objectsData[selectedObjectIndex].Size);
+                database.objectsData[selectedObjectIndex].Size,
+                database.objectsData[selectedObjectIndex].Cost);
         }
         else throw new System.Exception($"No object with ID {iD}");
     }
@@ -44,13 +45,20 @@ public class PlacementState : IBuildingState //inheriting from interface
         bool placementValidity = CheckPlacementValidity(gridPosition, selectedObjectIndex); //check whether something is already taking up the space
         if (placementValidity == false) return; //return if placement invalid - object already there
 
-        int index = objectPlacer.PlaceObject(database.objectsData[selectedObjectIndex].Prefab, grid.CellToWorld(gridPosition)); //places the prefab
-
-        GridData selectedData = structureData;
-        selectedData.AddObjectAt(gridPosition, //adds object to the object list
-            database.objectsData[selectedObjectIndex].Size,
-            database.objectsData[selectedObjectIndex].ID,
-            index);
+        if (StructureShop.currency - database.objectsData[selectedObjectIndex].Cost >= 0) //if they can afford it
+        {
+            int index = objectPlacer.PlaceObject(database.objectsData[selectedObjectIndex].Prefab, grid.CellToWorld(gridPosition)); //places the prefab
+            GridData selectedData = structureData;
+            selectedData.AddObjectAt(gridPosition, //adds object to the object list
+                database.objectsData[selectedObjectIndex].Size,
+                database.objectsData[selectedObjectIndex].ID,
+                index);
+            StructureShop.currency -= database.objectsData[selectedObjectIndex].Cost; //deducting cost from currency
+        }
+        else
+        {
+            Debug.Log("You do not have enough money");
+        }
         previewSystem.UpdatePosition(grid.CellToWorld(gridPosition), false);
     }
 
