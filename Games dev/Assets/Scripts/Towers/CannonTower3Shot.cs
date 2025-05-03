@@ -3,13 +3,13 @@ using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CannonTower : MonoBehaviour
+public class CannonTower3Shot : MonoBehaviour
 {
     private Transform target;
 
     [Header("Attributes")]
     public float range = 3.5f; //range from bottom of tower
-    public float fireRate = 1f;
+    public float fireRate = 3f;
     private float fireCountdown = 0f;
 
     [Header("Misc")]
@@ -19,6 +19,8 @@ public class CannonTower : MonoBehaviour
     public float turnSpeed = 7f;
     public GameObject shootEffect;
     public GameObject bulletPrefab;
+    public GameObject cannonSpinner;
+    public float spinSpeed;
 
     [Header("Upgrade")]
     public GameObject upgrade1;
@@ -65,6 +67,7 @@ public class CannonTower : MonoBehaviour
         Vector3 rotation = Quaternion.Lerp(cannonBarrel.rotation, standQuatRotation, turnSpeed * Time.deltaTime).eulerAngles;
         cannonStand.rotation = Quaternion.Euler(0f, rotation.y, 0f); //rotates stand to turn left and right
         cannonBarrel.localRotation = Quaternion.Euler(rotation.x, 0f, 0f); //rotates barrel to turn up and down
+        cannonSpinner.transform.Rotate(Vector3.up * spinSpeed * Time.deltaTime, Space.Self);
 
         if (fireCountdown <= 0f) //shoots
         {
@@ -77,8 +80,8 @@ public class CannonTower : MonoBehaviour
     private void Shoot()
     {
         GameObject bulletObject = Instantiate(bulletPrefab, cannonBarrel.position, cannonBarrel.rotation);
-        GameObject effectObject = Instantiate(shootEffect, effectLocation.position, effectLocation.rotation); //particle effect for shooting
-        Destroy(effectObject, 2f);
+        //GameObject effectObject = Instantiate(shootEffect, effectLocation.position, effectLocation.rotation); //particle effect for shooting
+        //Destroy(effectObject, 2f);
         Bullet bullet = bulletObject.GetComponent<Bullet>();
 
         if (bullet != null)
@@ -100,22 +103,22 @@ public class CannonTower : MonoBehaviour
 
     public void UpgradeTo(GameObject upgradeSelected)
     {
-        if (upgradeSelected == null || StructureShop.currency < 100) //if you dont have enough it just returns
+        if (upgradeSelected == null || StructureShop.currency < 100)
         {
             Debug.LogError("No upgraded prefab assigned!");
             return;
         }
         StructureShop.currency -= 100; //hard coded upgrade cost for now
-        Vector3 position = transform.position; //saving positions
+        Vector3 position = transform.position;
         Quaternion rotation = transform.rotation;
-        Transform parent = transform.parent; //has to be in a parent so the tile system doesnt get confused that its been replaced
+        Transform parent = transform.parent;
         Destroy(gameObject);
         // Instantiate the upgraded version
         GameObject newTower = Instantiate(upgradeSelected, position, rotation, parent);
 
         PlacementSystemm placementSystem = FindFirstObjectByType<PlacementSystemm>();
         Button[] allButtons = newTower.GetComponentsInChildren<Button>(true); // true = include inactive
-        foreach (Button btn in allButtons)//getting sell button for new struture
+        foreach (Button btn in allButtons)
         {
             if (btn.name == "Sell")
             {

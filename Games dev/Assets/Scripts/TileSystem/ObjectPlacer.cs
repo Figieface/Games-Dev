@@ -21,6 +21,7 @@ public class ObjectPlacer : MonoBehaviour
             if (btn.name == "Sell")
             {
                 Button sellButton = btn;
+                //Debug.Log(sellButton);
                 sellButton.onClick.AddListener(() => placementSystemm.SellTower());
                 break;
             }

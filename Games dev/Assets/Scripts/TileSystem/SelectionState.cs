@@ -45,7 +45,7 @@ public class SelectionState : IBuildingState
             GameObject selectedTower = objectPlacer.SelectObjectAt(gameObjectIndex); //select it from our object list
             Debug.Log(selectedTower);
             Canvas upgradePanel = selectedTower.GetComponentInChildren<Canvas>(true);
-            Debug.Log(upgradePanel);
+            //Debug.Log(upgradePanel);
             upgradePanel.gameObject.SetActive(true);            
         }
         Vector3 cellPosition = grid.CellToWorld(gridPosition);
