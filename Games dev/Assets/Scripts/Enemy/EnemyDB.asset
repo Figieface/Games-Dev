@@ -20,3 +20,12 @@ MonoBehaviour:
     <MoveSpeed>k__BackingField: 0
     <Reward>k__BackingField: 2
     <Prefab>k__BackingField: {fileID: 1618190590795302545, guid: e5adeb0491cfc95449891bb059f4d01d, type: 3}
+    <Cost>k__BackingField: 1
+  - <Name>k__BackingField: Goblin
+    <ID>k__BackingField: 1
+    <Damage>k__BackingField: 2
+    <MaxHP>k__BackingField: 10
+    <MoveSpeed>k__BackingField: 2
+    <Reward>k__BackingField: 5
+    <Prefab>k__BackingField: {fileID: 3026708374820010394, guid: 37866da14095ade4ca62a0825e1758cd, type: 3}
+    <Cost>k__BackingField: 2

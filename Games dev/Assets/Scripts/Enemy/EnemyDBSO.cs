@@ -19,4 +19,5 @@ public class EnemyData
     [field: SerializeField] public int MoveSpeed { get; private set; }
     [field: SerializeField] public int Reward { get; private set; }
     [field: SerializeField] public GameObject Prefab { get; private set; }
+    [field: SerializeField] public int Cost { get; private set; }
 }

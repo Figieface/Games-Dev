@@ -13,6 +13,10 @@ public class EnemyMovement : MonoBehaviour
 
     [SerializeField] public List<Vector3Int> enemyWaypoints; //should be set by the spawn method in wavespawner
 
+    public int maxHP;
+    public int currentHP;
+    public int reward;
+
     private Vector3Int endPoint;
     private int waypointIndex = 0;
 
@@ -22,6 +26,7 @@ public class EnemyMovement : MonoBehaviour
     {
         //enemyWaypoints.Add(Vector3Int.FloorToInt(transform.position));
         waveManager = FindFirstObjectByType<WaveManager>();
+        currentHP = maxHP;
     }
 
     private void Start()
@@ -31,7 +36,17 @@ public class EnemyMovement : MonoBehaviour
 
     private void Update()
     {
+        if (currentHP <= 0)
+        {
+            Die();
+        }
         Path();
+    }
+
+    private void Die()
+    {
+        StructureShop.currency += reward;
+        Destroy(gameObject);
     }
 
     private void Path()

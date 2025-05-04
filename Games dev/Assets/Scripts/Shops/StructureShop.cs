@@ -6,6 +6,7 @@ public class StructureShop : MonoBehaviour
 {
 
     [SerializeField] private TextMeshProUGUI currencyText;
+    [SerializeField] public GameObject shopUI;
     public static int currency;
 
     private void Start()
@@ -21,5 +22,10 @@ public class StructureShop : MonoBehaviour
     private void Update() //buying and selling are done in placementstate and removingstate respectively
     {
         currencyText.text = $"Gold: {currency}";
+    }
+
+    public void ToggleShopUI()
+    {
+        shopUI.SetActive(!shopUI.activeSelf);
     }
 }

@@ -15,7 +15,6 @@ public class WaveSpawner : MonoBehaviour
         public Vector3Int spawnPoint;
         public List<Vector3Int> path;
 
-
         public Wave(string name, GameObject enemy, int count, float spawnRate, Vector3Int spawnPoint, List<Vector3Int> path, int waveGroup, int damage) //constructor
         {
             this.name = name;
@@ -30,6 +29,7 @@ public class WaveSpawner : MonoBehaviour
     }
 
     [SerializeField] private EnemyDBSO enemyDatabase;
+    [SerializeField] public StructureShop structureShop;
 
     public enum SpawnState {SPAWNING, WAITING, COUNTING, BETWEENROUNDS};
 
@@ -46,7 +46,7 @@ public class WaveSpawner : MonoBehaviour
 
     private SpawnState state = SpawnState.COUNTING;
 
-    [SerializeField] private bool allowSpawning;
+    [SerializeField] public bool allowSpawning;
 
     private void Start()
     {
@@ -108,6 +108,7 @@ public class WaveSpawner : MonoBehaviour
         currentWaveGroup = 0; //resetting currentWaveGroup for next round
         nextWaveGroupExists = true; //nextwavegroup will exist next round
         allowSpawning = false;
+        structureShop.ToggleShopUI();
     }
 
     private bool EnemyIsAlive() //checking whether any enemies are alive

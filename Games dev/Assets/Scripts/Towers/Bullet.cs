@@ -7,6 +7,9 @@ public class Bullet : MonoBehaviour
 
     public float speed = 40f;
     private Vector3 enemyOffset = new Vector3(0.5f, 1f, 0.5f);
+
+    public int damage;
+
     public void Seek(Transform target) //set target
     {
         this.target = target;
@@ -34,6 +37,7 @@ public class Bullet : MonoBehaviour
 
     private void HitTarget() //for now just destroys itself
     {
+        target.gameObject.GetComponent<EnemyMovement>().currentHP -= damage;
         Destroy(gameObject);
     }
 }

@@ -76,6 +76,12 @@ public class PlacementSystemm : MonoBehaviour
         inputManager.OnExit += StopPlacement;
     }
 
+    public void StopCurrentState()
+    {
+        StopPlacement();
+        gridVisualisation.SetActive(false);
+    }
+
     public void SellTower()
     {
         //Debug.Log("SellTower called");
