@@ -21,6 +21,7 @@ public class CannonTower3Shot : MonoBehaviour
     public GameObject bulletPrefab;
     public GameObject cannonSpinner;
     public float spinSpeed;
+    public int bulletDamage;
 
     [Header("Upgrade")]
     public GameObject upgrade1;
@@ -83,6 +84,7 @@ public class CannonTower3Shot : MonoBehaviour
         //GameObject effectObject = Instantiate(shootEffect, effectLocation.position, effectLocation.rotation); //particle effect for shooting
         //Destroy(effectObject, 2f);
         Bullet bullet = bulletObject.GetComponent<Bullet>();
+        bullet.damage = bulletDamage;
 
         if (bullet != null)
         {

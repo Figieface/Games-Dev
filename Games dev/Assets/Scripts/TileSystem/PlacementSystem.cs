@@ -22,6 +22,10 @@ public class PlacementSystemm : MonoBehaviour
 
     [SerializeField] private ObjectPlacer objectPlacer;
 
+    [SerializeField] GameObject nextRoundUIBlocker;
+    [SerializeField] GameObject nextRoundUI;
+    [SerializeField] Pathfinding pathfinding;
+
     private Vector3Int lastDetectedPosition = Vector3Int.zero;
 
     IBuildingState buildingState;
@@ -29,6 +33,7 @@ public class PlacementSystemm : MonoBehaviour
     private void Awake()
     {
         structureData = new();
+        structureData.AddObjectAt(new Vector3Int(-1, 0, -1), new Vector2Int(3, 3), 5, 0); //places a 3x3 over the base so no objects can be placed there
     }
 
     private void Start()
@@ -114,6 +119,17 @@ public class PlacementSystemm : MonoBehaviour
         Vector3Int gridPosition = grid.WorldToCell(mousePosition);
 
         buildingState.OnAction(gridPosition);
+        List<Vector3Int> pathCheck = pathfinding.GenGridandPath(new Vector3Int(20, 0, 20), new Vector3Int(0, 0, 0));
+        if (pathCheck == null)
+        {
+            nextRoundUI.SetActive(false);
+            nextRoundUIBlocker.SetActive(true);
+        }
+        else
+        {
+            nextRoundUI.SetActive(true);
+            nextRoundUIBlocker.SetActive(false);
+        }
     }
 
     private void StopPlacement() 

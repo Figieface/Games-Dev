@@ -28,3 +28,18 @@ MonoBehaviour:
     <ID>k__BackingField: 2
     <Size>k__BackingField: {x: 1, y: 1}
     <Prefab>k__BackingField: {fileID: 2866190418023037487, guid: 076dbfc6d7f3a4b46a3bfedb892e484d, type: 3}
+  - <Name>k__BackingField: Balista Tower
+    <Cost>k__BackingField: 150
+    <ID>k__BackingField: 3
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 392541940139263656, guid: ff80a7229e839f24fb267665e1afad7d, type: 3}
+  - <Name>k__BackingField: Mage Tower
+    <Cost>k__BackingField: 170
+    <ID>k__BackingField: 4
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 854748224647657867, guid: 8d6e5a2e692aba34d884faac7426bb97, type: 3}
+  - <Name>k__BackingField: Nothing
+    <Cost>k__BackingField: 0
+    <ID>k__BackingField: 5
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 1485580656368478217, guid: 2f984573d6329d24a966138f87b810e8, type: 3}

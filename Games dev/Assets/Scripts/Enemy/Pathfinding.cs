@@ -8,7 +8,7 @@ public class Pathfinding : MonoBehaviour
     [SerializeField] PlacementSystemm placementData;
     //grid.WorldToCell
 
-    private int gridHeight = 100, gridWidth = 100;
+    private int gridHeight = 55, gridWidth = 50;
     private int cellHeight= 1, cellWidth = 1;
 
     private Dictionary<Vector3Int, Cell> cells;
@@ -35,7 +35,16 @@ public class Pathfinding : MonoBehaviour
         //Debug.Log(cells);
         List<Vector3Int> walls = structureData.BlockedPositions(); //getting all taken up positions
 
-        //Debug.Log(walls);
+        List<Vector3Int> pathThrough = new List<Vector3Int> //any positions the enemies can always pass through
+        {
+            new Vector3Int(0, 0, 0),
+            new Vector3Int(1, 0, 0),
+            new Vector3Int(-1, 0, 0),
+            new Vector3Int(0, 0, 1),
+            new Vector3Int(0, 0, -1)
+        };
+        walls.RemoveAll(n => pathThrough.Contains(n)); //removes the positions from list of blocked positions
+
 
         for (int x = 0; x < gridWidth; x += cellWidth)
         {

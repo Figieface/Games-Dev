@@ -11,7 +11,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float panBorderThickness; //10
     private bool allowMovement;
     private Vector3 targetPos;
-    private float limitX = 20f, limitZ = 20f;
+    private float limitX = 4f, limitZ = 7f;
 
     private void Start()
     {
@@ -43,7 +43,7 @@ public class CameraController : MonoBehaviour
         targetPos += inputDir.normalized * panSpeed * Time.deltaTime;
 
         targetPos.x = Mathf.Clamp(targetPos.x, -limitX, limitX);
-        targetPos.z = Mathf.Clamp(targetPos.z, -limitZ - 5, limitZ);
+        targetPos.z = Mathf.Clamp(targetPos.z, -limitZ - 4, limitZ - 10);
 
         transform.position = Vector3.Lerp(transform.position, targetPos, panSmoothSpeed * Time.deltaTime); //smoothly move in direction
 

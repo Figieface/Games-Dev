@@ -26,6 +26,38 @@ MonoBehaviour:
     <Damage>k__BackingField: 2
     <MaxHP>k__BackingField: 10
     <MoveSpeed>k__BackingField: 2
-    <Reward>k__BackingField: 5
+    <Reward>k__BackingField: 3
     <Prefab>k__BackingField: {fileID: 3026708374820010394, guid: 37866da14095ade4ca62a0825e1758cd, type: 3}
+    <Cost>k__BackingField: 2
+  - <Name>k__BackingField: Golem
+    <ID>k__BackingField: 2
+    <Damage>k__BackingField: 5
+    <MaxHP>k__BackingField: 10
+    <MoveSpeed>k__BackingField: 2
+    <Reward>k__BackingField: 10
+    <Prefab>k__BackingField: {fileID: 1259859065189128332, guid: ba6556fcead70de499016d8a3faa6447, type: 3}
+    <Cost>k__BackingField: 10
+  - <Name>k__BackingField: TreeEnt
+    <ID>k__BackingField: 3
+    <Damage>k__BackingField: 4
+    <MaxHP>k__BackingField: 10
+    <MoveSpeed>k__BackingField: 2
+    <Reward>k__BackingField: 5
+    <Prefab>k__BackingField: {fileID: 1092017552682623770, guid: abf925d012f128c4da53f86d75481584, type: 3}
+    <Cost>k__BackingField: 5
+  - <Name>k__BackingField: Vulture
+    <ID>k__BackingField: 4
+    <Damage>k__BackingField: 2
+    <MaxHP>k__BackingField: 10
+    <MoveSpeed>k__BackingField: 2
+    <Reward>k__BackingField: 2
+    <Prefab>k__BackingField: {fileID: 4526051364084791759, guid: d977115e7b6773448ae8a942235bd9d9, type: 3}
+    <Cost>k__BackingField: 2
+  - <Name>k__BackingField: Wolf
+    <ID>k__BackingField: 5
+    <Damage>k__BackingField: 2
+    <MaxHP>k__BackingField: 10
+    <MoveSpeed>k__BackingField: 2
+    <Reward>k__BackingField: 2
+    <Prefab>k__BackingField: {fileID: 6422155820912722649, guid: ba5a8d7e1fde6214e89966e47fc7e593, type: 3}
     <Cost>k__BackingField: 2

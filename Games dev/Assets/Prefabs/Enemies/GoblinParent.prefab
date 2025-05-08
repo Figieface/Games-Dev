@@ -372,6 +372,7 @@ GameObject:
   - component: {fileID: 6831580090047238860}
   - component: {fileID: 5353371460460637675}
   - component: {fileID: 1846421841217122930}
+  - component: {fileID: 3220988623428138930}
   m_Layer: 0
   m_Name: GoblinParent
   m_TagString: Enemy
@@ -412,9 +413,9 @@ MonoBehaviour:
   moveSpeed: 2
   pivot: {fileID: 5672643350266704765}
   enemyWaypoints: []
-  maxHP: 30
-  currentHP: 30
-  reward: 5
+  maxHP: 20
+  currentHP: 20
+  reward: 2
   damage: 2
 --- !u!95 &1846421841217122930
 Animator:
@@ -438,6 +439,27 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!65 &3220988623428138930
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3026708374820010394}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.5, y: 1, z: 0.5}
+  m_Center: {x: 0.5, y: 0.5, z: 0.5}
 --- !u!1 &3148530099690166364
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,9 +1,11 @@
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class WaveManager : MonoBehaviour
 {
@@ -16,29 +18,34 @@ public class WaveManager : MonoBehaviour
     Vector3Int waveDestination;
     private List<Vector3Int> spawnLocations = new List<Vector3Int>
     {
-        new Vector3Int(-40, 0, 20),
-        new Vector3Int(-40, 0, 40),
-        new Vector3Int(-20, 0, 40),
-        new Vector3Int(0, 0, 40),
-        new Vector3Int(20, 0, 40),
-        new Vector3Int(40, 0, 40),
-        new Vector3Int(40, 0, 20)
+        new Vector3Int(-23, 0, 22),
+        new Vector3Int(-23, 0, 0),//
+        new Vector3Int(0, 0, 22),
+        new Vector3Int(23, 0, 22),
+        new Vector3Int(23, 0, 0),
+        new Vector3Int(23, 0, -16),
+        new Vector3Int(-23, 0, -16),
+        new Vector3Int(0, 0, -16)
     };
 
     private int roundCounter;
     [SerializeField] List<List<WaveData>> rounds;
-    private List<EnemyData> levelEnemies = new();
-    public static float gameDifficulty;
+    [SerializeField] private List<EnemyData> levelEnemies;
+
 
     [SerializeField] private EnemyDBSO database;
-
     [SerializeField] private GameObject endLevelUI;
+    [SerializeField] public TextMeshProUGUI roundCounterUI;
 
     private void Start()
     {
-        Time.timeScale = 3f;
-        WaveManager.gameDifficulty = 100;
-        levelEnemies.Add(database.enemyData.Find(iD => iD.ID == 1));//adding enemy with ID=1  (goblin)
+        //Time.timeScale = 3f;
+        for (int i = 0; i < 3; i++)
+        {
+            int randomEnemy = UnityEngine.Random.Range(1,6);
+            levelEnemies.Add(database.enemyData.Find(iD => iD.ID == randomEnemy));//adding enemy
+        }
+
         roundCounter = 0;
         waveDestination = new Vector3Int(0, 0, 0);
 
@@ -67,6 +74,7 @@ public class WaveManager : MonoBehaviour
         }
         AllowWaves();
         roundCounter++; //puts the round counter up one
+        roundCounterUI.text = $"Round: {roundCounter}/10";
     }
 
     private void EndLevel()
@@ -151,7 +159,7 @@ public class WaveManager : MonoBehaviour
 
     private int GetRoundDifficultyBudget(int round)
     {
-        return Mathf.RoundToInt(gameDifficulty + (round * 4));
+        return Mathf.RoundToInt(DifficultyManager.gameDifficulty + (round * 4));
     }
 }
 

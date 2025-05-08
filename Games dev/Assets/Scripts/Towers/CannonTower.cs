@@ -19,9 +19,11 @@ public class CannonTower : MonoBehaviour
     public float turnSpeed = 7f;
     public GameObject shootEffect;
     public GameObject bulletPrefab;
+    public int bulletDamage;
 
     [Header("Upgrade")]
     public GameObject upgrade1;
+    public GameObject upgrade2;
 
     //public Transform firePoint;
 
@@ -80,7 +82,7 @@ public class CannonTower : MonoBehaviour
         GameObject effectObject = Instantiate(shootEffect, effectLocation.position, effectLocation.rotation); //particle effect for shooting
         Destroy(effectObject, 2f);
         Bullet bullet = bulletObject.GetComponent<Bullet>();
-        bullet.damage = 30;
+        bullet.damage = bulletDamage;
 
         if (bullet != null)
         {
@@ -98,6 +100,12 @@ public class CannonTower : MonoBehaviour
     {
         UpgradeTo(upgrade1);
     }
+
+    public void Upgrade2Chosen() //button listenr from  this
+    {
+        UpgradeTo(upgrade2);
+    }
+
 
     public void UpgradeTo(GameObject upgradeSelected)
     {

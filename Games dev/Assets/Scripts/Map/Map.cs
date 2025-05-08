@@ -15,7 +15,7 @@ public class Map : MonoBehaviour
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] private Transform mapCanvas;
     private Node playerNode;
-    private int columns = 5, rows = 8;
+    private int columns = 3, rows = 7;
     public static List<List<Node>> nodeGrid;
 
     public static List<List<Node>> savedMap;
@@ -94,7 +94,7 @@ public class Map : MonoBehaviour
                 if (grid[row][col] == null) continue;
                 GameObject nodeInstance = Instantiate(grid[row][col].nodePrefab, mapCanvas); //instantises the prefab
                 RectTransform rect = nodeInstance.GetComponent<RectTransform>();
-                rect.anchoredPosition = new Vector2((col * 100) - (columns/2 * 100), (row * 100) - (rows/2 * 100));
+                rect.anchoredPosition = new Vector2((col * 200) - (columns/2 * 200), (row * 100) - (rows/2 * 100));
                 Button nodeButton = nodeInstance.GetComponent<Button>();
                 int r = row; int c = col;
                 nodeButton.onClick.AddListener(() => clickToMove(nodeGrid[r][c]));
@@ -123,12 +123,12 @@ public class Map : MonoBehaviour
 
         GameObject playerPrefabInstance = Instantiate(playerNode.nodePrefab, mapCanvas);
         RectTransform rect = playerPrefabInstance.GetComponent<RectTransform>();
-        rect.anchoredPosition = new Vector2((playerNode.column * 100) - (columns / 2 * 100), (playerNode.row * 100) - (rows / 2 * 100));
+        rect.anchoredPosition = new Vector2((playerNode.column * 200) - (columns / 2 * 200), (playerNode.row * 100) - (rows / 2 * 100));
 
         savedPrevPositions.Add(rect.anchoredPosition);
         savedPlayerNode = playerNode;
 
-
+        DifficultyManager.gameDifficulty += 10; //difficulty goes up each node chosen
         SceneManager.LoadScene(towerMaps[(int)UnityEngine.Random.Range(0,towerMaps.Count)]); //random map loaded
     }
 
