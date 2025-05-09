@@ -29,6 +29,6 @@ public class PauseMenu : MonoBehaviour
 
     public void mainMenu()
     {
-
+        MainMenu.GoToMainMenu();
     }
 }

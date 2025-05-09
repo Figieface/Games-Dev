@@ -108,6 +108,7 @@ public class WaveSpawner : MonoBehaviour
         currentWaveGroup = 0; //resetting currentWaveGroup for next round
         nextWaveGroupExists = true; //nextwavegroup will exist next round
         allowSpawning = false;
+        StructureShop.currency += 120;
         structureShop.ToggleShopUI();
     }
 

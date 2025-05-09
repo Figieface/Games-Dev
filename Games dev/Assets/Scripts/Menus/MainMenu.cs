@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -6,6 +7,7 @@ public class MainMenu : MonoBehaviour
     public string loadMap = "map";
     [SerializeField] private GameObject difficultyUI;
     [SerializeField] private GameObject newGameQuitUI;
+    [SerializeField] private GameObject comicUI;
 
     public void NewGame()
     {
@@ -13,7 +15,7 @@ public class MainMenu : MonoBehaviour
         difficultyUI.SetActive(true);
     }
 
-    private void GoToMap()
+    public void GoToMap()
     {
         SceneManager.LoadScene(loadMap);
     }
@@ -21,17 +23,27 @@ public class MainMenu : MonoBehaviour
     public void EasyDifficulty()
     {
         DifficultyManager.gameDifficulty = 70;
-        GoToMap();
+        ShowComic();
     }
     public void MediumDifficulty()
     {
         DifficultyManager.gameDifficulty = 100;
-        GoToMap();
+        ShowComic();
     }
     public void HardDifficulty()
     {
         DifficultyManager.gameDifficulty = 140;
-        GoToMap();
+        ShowComic();
+    }
+
+    private void ShowComic()
+    {
+        comicUI.SetActive(true);
+    }
+
+    public static void GoToMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void Quit()

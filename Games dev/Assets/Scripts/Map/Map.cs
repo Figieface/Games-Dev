@@ -28,7 +28,7 @@ public class Map : MonoBehaviour
     {
         "RockyMap",
         "GrassyMap",
-        "BrickMap"
+        "CorruptedMap"
     };
 
     private void Start()
