@@ -253,6 +253,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   range: 10
   fireRate: 0.75
+  audioSource: {fileID: 0}
+  upgradeSound: {fileID: 8300000, guid: a76ae31f6da8b3d43bea1fe7e094a255, type: 3}
+  shootSound: {fileID: 8300000, guid: 51588cfaffca4624594c23cdde5f5ca1, type: 3}
+  deniedSound: {fileID: 8300000, guid: 01176e63d96743248b6aa1400617c7d3, type: 3}
   cannonStand: {fileID: 4239007598853347600}
   cannonBarrel: {fileID: 3223669471567301683}
   bottomOfTower: {fileID: 7817789615143699479}

@@ -9,29 +9,38 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject newGameQuitUI;
     [SerializeField] private GameObject comicUI;
 
+    private void Start()
+    {
+        AudioManager.menumusicSound();
+    }
     public void NewGame()
     {
+        AudioManager.swordSound();
         newGameQuitUI.SetActive(false);
         difficultyUI.SetActive(true);
     }
 
     public void GoToMap()
     {
+        AudioManager.swordSound();
         SceneManager.LoadScene(loadMap);
     }
 
     public void EasyDifficulty()
     {
+        AudioManager.swordSound();
         DifficultyManager.gameDifficulty = 70;
         ShowComic();
     }
     public void MediumDifficulty()
     {
+        AudioManager.swordSound();
         DifficultyManager.gameDifficulty = 100;
         ShowComic();
     }
     public void HardDifficulty()
     {
+        AudioManager.swordSound();
         DifficultyManager.gameDifficulty = 140;
         ShowComic();
     }
@@ -48,6 +57,7 @@ public class MainMenu : MonoBehaviour
 
     public void Quit()
     {
+        AudioManager.swordSound();
         Application.Quit();
     }
 }

@@ -37,9 +37,12 @@ public class WaveManager : MonoBehaviour
     [SerializeField] private GameObject endLevelUI;
     [SerializeField] public TextMeshProUGUI roundCounterUI;
 
+    private bool victorySound = false;
+
     private void Start()
     {
-        //Time.timeScale = 5f;
+        AudioManager.gamemusicSound();
+        Time.timeScale = 5f;
         for (int i = 0; i < 3; i++)
         {
             int randomEnemy = UnityEngine.Random.Range(1,6);
@@ -80,6 +83,11 @@ public class WaveManager : MonoBehaviour
     private void EndLevel()
     {
         endLevelUI.SetActive(true);
+        if (victorySound == false)
+        {
+            AudioManager.wonSound();
+            victorySound = true;
+        }
     }
 
     private void GenerateRounds()

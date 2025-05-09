@@ -53,6 +53,7 @@ public class PlacementState : IBuildingState //inheriting from interface
                 database.objectsData[selectedObjectIndex].Size,
                 database.objectsData[selectedObjectIndex].ID,
                 index);
+            AudioManager.constructSound();
             StructureShop.currency -= database.objectsData[selectedObjectIndex].Cost; //deducting cost from currency
         }
         else

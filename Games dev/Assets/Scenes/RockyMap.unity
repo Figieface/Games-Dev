@@ -1615,6 +1615,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 710902945}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: startroundSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &386303626
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2675,6 +2687,62 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 691077587}
   m_CullTransparentMesh: 1
+--- !u!1 &710902944
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 710902946}
+  - component: {fileID: 710902945}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &710902945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 710902944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 633f25ac848d9c241b7eeb504cd81991, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  arrow: {fileID: 8300000, guid: 51588cfaffca4624594c23cdde5f5ca1, type: 3}
+  cannon: {fileID: 8300000, guid: d73f38e0742115048b6b84b7450e50e1, type: 3}
+  sword: {fileID: 8300000, guid: 19d1ed9251282f44db8b2e72de87f4fc, type: 3}
+  construct: {fileID: 8300000, guid: 2997d0c424c22c9489d330c5c9f99657, type: 3}
+  demolish: {fileID: 8300000, guid: a7b225c65cb6ea54195742a6e70ce004, type: 3}
+  denied: {fileID: 8300000, guid: 01176e63d96743248b6aa1400617c7d3, type: 3}
+  lost: {fileID: 8300000, guid: a1c4432b2fd951049bfd5d3bfe2129af, type: 3}
+  won: {fileID: 8300000, guid: f332b4255a9fa66418bb76701d205dac, type: 3}
+  magic: {fileID: 8300000, guid: 4b12118bf3b90bb46a0f23cc0c76bc27, type: 3}
+  menumusic: {fileID: 8300000, guid: 9979c4b9e83cd7147abebcd19f027935, type: 3}
+  gamemusic: {fileID: 8300000, guid: 1819c6cd807cb6f4bbe93a33d9f2843b, type: 3}
+  startround: {fileID: 8300000, guid: 3fe7fb64fef715644a35a0c26d2ce65b, type: 3}
+--- !u!4 &710902946
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 710902944}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.4313455, y: -8.0509815, z: 8.215459}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &756207950
 GameObject:
   m_ObjectHideFlags: 0
@@ -11221,3 +11289,4 @@ SceneRoots:
   - {fileID: 672118412}
   - {fileID: 356959917}
   - {fileID: 319986246}
+  - {fileID: 710902946}

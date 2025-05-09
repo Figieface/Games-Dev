@@ -81,6 +81,7 @@ public class CannonTower3Shot : MonoBehaviour
     private void Shoot()
     {
         GameObject bulletObject = Instantiate(bulletPrefab, cannonBarrel.position, cannonBarrel.rotation);
+        AudioManager.cannonSound();
         //GameObject effectObject = Instantiate(shootEffect, effectLocation.position, effectLocation.rotation); //particle effect for shooting
         //Destroy(effectObject, 2f);
         Bullet bullet = bulletObject.GetComponent<Bullet>();
@@ -107,10 +108,12 @@ public class CannonTower3Shot : MonoBehaviour
     {
         if (upgradeSelected == null || StructureShop.currency < 100)
         {
+            AudioManager.deniedSound();
             Debug.LogError("No upgraded prefab assigned!");
             return;
         }
         StructureShop.currency -= 100; //hard coded upgrade cost for now
+        AudioManager.constructSound();
         Vector3 position = transform.position;
         Quaternion rotation = transform.rotation;
         Transform parent = transform.parent;
@@ -126,6 +129,7 @@ public class CannonTower3Shot : MonoBehaviour
             {
                 Button sellButton = btn;
                 //Debug.Log(sellButton);
+                sellButton.onClick.AddListener(() => AudioManager.demolishSound());
                 sellButton.onClick.AddListener(() => placementSystem.SellTower());
                 break;
             }

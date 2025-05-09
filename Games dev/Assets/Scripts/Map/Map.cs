@@ -33,6 +33,7 @@ public class Map : MonoBehaviour
 
     private void Start()
     {
+        AudioManager.menumusicSound();
         if (nodeGrid == null)
         {
             playerNode = new Node(-1, columns/2, Vector2.zero, playerPrefab);
@@ -121,6 +122,7 @@ public class Map : MonoBehaviour
         //Debug.Log(playerNode.row + 1);
         if ((targetNode.row == playerNode.row + 1) && (3 >= Mathf.Abs(targetNode.column-playerNode.column)))
         {
+            AudioManager.swordSound();
             playerNode.row = targetNode.row;
             playerNode.column = targetNode.column;
             playerNode.mapPos = targetNode.mapPos;
@@ -128,11 +130,13 @@ public class Map : MonoBehaviour
         }
         else if (playerNode.row == rows)
         {
+            AudioManager.swordSound();
             DifficultyManager.gameDifficulty += 30;
             SceneManager.LoadScene("BossMap");
         }
         else
         {
+            AudioManager.deniedSound();
             Debug.Log("Cannot move here");
             return;
         }

@@ -50,6 +50,7 @@ public class RemovingState : IBuildingState //inheriting from interface
             StructureShop.currency = StructureShop.currency + Mathf.CeilToInt(structure.Cost * 0.666f);
             if (gameObjectIndex == -1)
                 return;
+            AudioManager.demolishSound();
             selectedData.RemoveObjectAt(gridPosition); //remove actual prefab
             objectPlacer.RemoveObjectAt(gameObjectIndex); //remove it from our object list
         }

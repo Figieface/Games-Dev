@@ -79,6 +79,7 @@ public class ArrowTower : MonoBehaviour
     private void Shoot()
     {
         GameObject bulletObject = Instantiate(bulletPrefab, cannonBarrel.position, cannonBarrel.rotation);
+        AudioManager.arrowSound();
         Bullet bullet = bulletObject.GetComponent<Bullet>();
         bullet.damage = bulletDamage;
 
@@ -109,10 +110,12 @@ public class ArrowTower : MonoBehaviour
     {
         if (upgradeSelected == null || StructureShop.currency < 100) //if you dont have enough it just returns
         {
+            AudioManager.deniedSound();
             Debug.LogError("No upgraded prefab assigned!");
             return;
         }
         StructureShop.currency -= 100; //hard coded upgrade cost for now
+        AudioManager.constructSound();
         Vector3 position = transform.position; //saving positions
         Quaternion rotation = transform.rotation;
         Transform parent = transform.parent; //has to be in a parent so the tile system doesnt get confused that its been replaced
@@ -129,6 +132,7 @@ public class ArrowTower : MonoBehaviour
                 Button sellButton = btn;
                 //Debug.Log(sellButton);
                 sellButton.onClick.AddListener(() => placementSystem.SellTower());
+                sellButton.onClick.AddListener(() => AudioManager.demolishSound());
                 break;
             }
         }

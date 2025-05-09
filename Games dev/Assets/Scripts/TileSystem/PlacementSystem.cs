@@ -44,6 +44,7 @@ public class PlacementSystemm : MonoBehaviour
 
     public void StartPlacement(int ID) //method that building button calls, creates new placementstate
     {
+        AudioManager.swordSound();
         StopPlacement();
         gridVisualisation.SetActive(true);
         buildingState = new PlacementState(ID,
@@ -58,6 +59,7 @@ public class PlacementSystemm : MonoBehaviour
 
     public void StartSelectionState()
     {
+        AudioManager.swordSound();
         StopPlacement();
         gridVisualisation.SetActive(true);
         buildingState = new SelectionState(grid,
@@ -70,6 +72,7 @@ public class PlacementSystemm : MonoBehaviour
 
     public void StartRemoving() //method that remove button calls, creates new removestate
     {
+        AudioManager.swordSound();
         StopPlacement();
         gridVisualisation.SetActive(true);
         buildingState = new RemovingState(grid,
