@@ -3627,8 +3627,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nodePrefab: {fileID: 85693660727836612, guid: 0e00488b33f3d4a42a679ce8791e2111, type: 3}
+  selectableNode: {fileID: 5889730156142372292, guid: 09cab8d0c89fcfb4cb11296c6245a8cd, type: 3}
+  bossNodePrefab: {fileID: 8009035278321228725, guid: c2dab46b128c10b4292a263f4eeb9dc5, type: 3}
   playerPrefab: {fileID: 8322315565857303786, guid: ff1b80ca34f90f7428fbc04a7c979b94, type: 3}
   mapCanvas: {fileID: 998969537}
+  mapLinePrefab: {fileID: 1082104997526700746, guid: 25de17f37fcc8ae41879a586af8040d1, type: 3}
   towerMaps:
   - RockyMap
 --- !u!1 &712205533

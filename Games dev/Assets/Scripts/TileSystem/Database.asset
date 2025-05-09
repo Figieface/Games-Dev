@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectsData:
   - <Name>k__BackingField: Vertical Wall
-    <Cost>k__BackingField: 60
+    <Cost>k__BackingField: 30
     <ID>k__BackingField: 0
     <Size>k__BackingField: {x: 1, y: 2}
     <Prefab>k__BackingField: {fileID: 2310743733965121707, guid: 2bb8e95f972a35449a4107ce9985bf4b, type: 3}
   - <Name>k__BackingField: Horizontal Wall
-    <Cost>k__BackingField: 90
+    <Cost>k__BackingField: 45
     <ID>k__BackingField: 1
     <Size>k__BackingField: {x: 3, y: 1}
     <Prefab>k__BackingField: {fileID: 5754299302749327472, guid: 08f73fe7b186c8b4494d526efb210041, type: 3}

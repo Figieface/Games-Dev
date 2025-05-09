@@ -12,20 +12,23 @@ using static UnityEngine.Rendering.DebugUI.Table;
 public class Map : MonoBehaviour
 {
     [SerializeField] private GameObject nodePrefab;
+    [SerializeField] private GameObject bossNodePrefab;
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] private Transform mapCanvas;
+
     private Node playerNode;
-    private int columns = 3, rows = 7;
+    private int columns = 3, rows = 5;
     public static List<List<Node>> nodeGrid;
 
     public static List<List<Node>> savedMap;
     public static Node savedPlayerNode;
     public static List<Vector2> savedPrevPositions = new List<Vector2>();
 
-
     public List<String> towerMaps = new List<String>
     {
-        "RockyMap"
+        "RockyMap",
+        "GrassyMap",
+        "BrickMap"
     };
 
     private void Start()
@@ -52,6 +55,8 @@ public class Map : MonoBehaviour
     {
 
     }
+
+
 
     private void GenerateNodeGrid() //5x8 list of Nodes filled with Null
     {
@@ -94,13 +99,19 @@ public class Map : MonoBehaviour
                 if (grid[row][col] == null) continue;
                 GameObject nodeInstance = Instantiate(grid[row][col].nodePrefab, mapCanvas); //instantises the prefab
                 RectTransform rect = nodeInstance.GetComponent<RectTransform>();
-                rect.anchoredPosition = new Vector2((col * 200) - (columns/2 * 200), (row * 100) - (rows/2 * 100));
+                rect.anchoredPosition = new Vector2((col * 200) - (columns/2 * 200), (row * 100) - (rows/2 * 100) - 50);
                 Button nodeButton = nodeInstance.GetComponent<Button>();
                 int r = row; int c = col;
                 nodeButton.onClick.AddListener(() => clickToMove(nodeGrid[r][c]));
                 grid[row][col].mapPos = nodeInstance.transform.position;
             }
         }
+        GameObject bossNodeInstance = Instantiate(bossNodePrefab, mapCanvas);
+        RectTransform bossRect = bossNodeInstance.GetComponent<RectTransform>();
+        bossRect.anchoredPosition = new Vector2(0, (rows * 100) - (rows / 2 * 100));
+        Button bossNodeButton = bossNodeInstance.GetComponent<Button>();
+        bossNodeButton.onClick.AddListener(() => clickToMove(new Node(rows,0,bossNodeInstance.transform.position,bossNodePrefab)));
+
     }
 
     public void clickToMove(Node targetNode)
@@ -115,21 +126,29 @@ public class Map : MonoBehaviour
             playerNode.mapPos = targetNode.mapPos;
             Debug.Log(playerNode.mapPos);
         }
+        else if (playerNode.row == rows)
+        {
+            DifficultyManager.gameDifficulty += 30;
+            SceneManager.LoadScene("BossMap");
+        }
         else
         {
             Debug.Log("Cannot move here");
             return;
         }
 
-        GameObject playerPrefabInstance = Instantiate(playerNode.nodePrefab, mapCanvas);
-        RectTransform rect = playerPrefabInstance.GetComponent<RectTransform>();
-        rect.anchoredPosition = new Vector2((playerNode.column * 200) - (columns / 2 * 200), (playerNode.row * 100) - (rows / 2 * 100));
+        if (playerNode.row != rows)
+        {
+            GameObject playerPrefabInstance = Instantiate(playerNode.nodePrefab, mapCanvas);
+            RectTransform rect = playerPrefabInstance.GetComponent<RectTransform>();
+            rect.anchoredPosition = new Vector2((playerNode.column * 200) - (columns / 2 * 200), (playerNode.row * 100) - (rows / 2 * 100) - 50);
 
-        savedPrevPositions.Add(rect.anchoredPosition);
-        savedPlayerNode = playerNode;
+            savedPrevPositions.Add(rect.anchoredPosition);
+            savedPlayerNode = playerNode;
 
-        DifficultyManager.gameDifficulty += 10; //difficulty goes up each node chosen
-        SceneManager.LoadScene(towerMaps[(int)UnityEngine.Random.Range(0,towerMaps.Count)]); //random map loaded
+            DifficultyManager.gameDifficulty += 10; //difficulty goes up each node chosen
+            SceneManager.LoadScene(towerMaps[(int)UnityEngine.Random.Range(0, towerMaps.Count)]); //random map loaded
+        }
     }
 
     private void LoadPrevPositions(List<Vector2> savedPrevPositions)
