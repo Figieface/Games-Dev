@@ -42,7 +42,7 @@ public class WaveManager : MonoBehaviour
     private void Start()
     {
         AudioManager.gamemusicSound();
-        Time.timeScale = 5f;
+        //Time.timeScale = 5f;
         for (int i = 0; i < 3; i++)
         {
             int randomEnemy = UnityEngine.Random.Range(1,6);

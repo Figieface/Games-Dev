@@ -18,6 +18,7 @@ public class MainMenu : MonoBehaviour
         AudioManager.swordSound();
         newGameQuitUI.SetActive(false);
         difficultyUI.SetActive(true);
+        ScoreManager.score = 0;
     }
 
     public void GoToMap()

@@ -22,6 +22,9 @@ public class EnemyMovement : MonoBehaviour
 
     public int damage;//to be changed by the spawner
 
+    [SerializeField] public GameObject bloodSplatter;
+    [SerializeField] public Transform effectLocation;
+
     private void Awake()
     {
         //enemyWaypoints.Add(Vector3Int.FloorToInt(transform.position));
@@ -46,6 +49,9 @@ public class EnemyMovement : MonoBehaviour
     private void Die()
     {
         StructureShop.currency += reward;
+        ScoreManager.score += reward;
+        GameObject blood = Instantiate(bloodSplatter, effectLocation.position, effectLocation.rotation * Quaternion.Euler(-90f,0f,0f));
+        Destroy(blood,2f);
         Destroy(gameObject);
     }
 

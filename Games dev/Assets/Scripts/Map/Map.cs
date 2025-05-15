@@ -132,6 +132,7 @@ public class Map : MonoBehaviour
         {
             AudioManager.swordSound();
             DifficultyManager.gameDifficulty += 30;
+            ScoreManager.score += 100;
             SceneManager.LoadScene("BossMap");
         }
         else
@@ -151,6 +152,7 @@ public class Map : MonoBehaviour
             savedPlayerNode = playerNode;
 
             DifficultyManager.gameDifficulty += 10; //difficulty goes up each node chosen
+            ScoreManager.score += 50;
             SceneManager.LoadScene(towerMaps[(int)UnityEngine.Random.Range(0, towerMaps.Count)]); //random map loaded
         }
     }

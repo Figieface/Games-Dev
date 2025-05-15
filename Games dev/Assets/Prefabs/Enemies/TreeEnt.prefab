@@ -141,6 +141,8 @@ MonoBehaviour:
   currentHP: 60
   reward: 4
   damage: 4
+  bloodSplatter: {fileID: 5627004445674747940, guid: 37e6f9cba0a2d1b4aa8b3ecef118fa1c, type: 3}
+  effectLocation: {fileID: 4646443791613619489}
 --- !u!95 &8676959721025329862
 Animator:
   serializedVersion: 7

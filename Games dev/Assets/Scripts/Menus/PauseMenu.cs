@@ -1,10 +1,12 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour
 {
     public GameObject pauseUI;
+    [SerializeField]public TextMeshProUGUI scoreUI;
 
     void Update()
     {
@@ -16,6 +18,7 @@ public class PauseMenu : MonoBehaviour
 
     public void Toggle()
     {
+        scoreUI.text = $"Score: {ScoreManager.score}";
         pauseUI.SetActive(!pauseUI.activeSelf);
         if (pauseUI.activeSelf)
         {

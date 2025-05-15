@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class PlacementSystemm : MonoBehaviour
 {
@@ -34,12 +35,80 @@ public class PlacementSystemm : MonoBehaviour
     {
         structureData = new();
         structureData.AddObjectAt(new Vector3Int(-1, 0, -1), new Vector2Int(3, 3), 5, 0); //places a 3x3 over the base so no objects can be placed there
+        PlaceTerrain();
     }
 
     private void Start()
     {
         gridVisualisation.SetActive(false);
         StopPlacement();
+    }
+
+    private void PlaceTerrain()
+    {
+        String sceneName = SceneManager.GetActiveScene().name;
+        if (sceneName == "RockyMap")
+        {
+            for (int i = 0; i < 9; i++)
+            {
+                if (!ManualPlacement(GetRandomVector(13, -12), 6)) i--;
+            }
+        }
+        else if (sceneName == "GrassyMap")
+        {
+
+        }
+        else if (sceneName == "CorruptedMap")
+        {
+
+        }
+        else if (sceneName == "BossMap")
+        {
+
+        }
+    }
+
+    private Vector3Int GetRandomVector(int posMax, int negMax)
+    {
+        int x = RandomRange(posMax, negMax);
+        int z = RandomRange(posMax, negMax);
+        return new Vector3Int(x, 0, z);
+    }
+
+    private int RandomRange(int posMax, int negMax)
+    {
+        // Choose either the positive or negative range
+        bool posOrNeg = UnityEngine.Random.value > 0.5f;
+
+        if (posOrNeg)
+        {
+            return UnityEngine.Random.Range(5, posMax); // 5 to 18 inclusive
+        }
+        else
+        {
+            return UnityEngine.Random.Range(negMax, -4); // -18 to -5 inclusive
+        }
+    }
+
+    private bool ManualPlacement(Vector3Int gridPosition, int ID)
+    {
+        int selectedObjectIndex = database.objectsData.FindIndex(data => data.ID == ID);
+
+        bool placementValidity = CheckPlacementValidity(gridPosition, selectedObjectIndex);
+        if (!placementValidity) return false;
+
+        int index = objectPlacer.PlaceObject(database.objectsData[selectedObjectIndex].Prefab, grid.CellToWorld(gridPosition)); //places the prefab
+        GridData selectedData = structureData;
+        selectedData.AddObjectAt(gridPosition, //adds object to the object list
+            database.objectsData[selectedObjectIndex].Size,
+            database.objectsData[selectedObjectIndex].ID,
+            index);
+        return true;
+    }
+    private bool CheckPlacementValidity(Vector3Int gridPosition, int selectedObjectIndex) //checks validity by seeing if another object is taking up the grid position
+    {
+        GridData selectedData = structureData;
+        return selectedData.CanPlaceObjectAt(gridPosition, database.objectsData[selectedObjectIndex].Size);
     }
 
     public void StartPlacement(int ID) //method that building button calls, creates new placementstate
