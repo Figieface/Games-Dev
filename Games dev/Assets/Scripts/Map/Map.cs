@@ -11,13 +11,13 @@ using static UnityEngine.Rendering.DebugUI.Table;
 
 public class Map : MonoBehaviour
 {
-    [SerializeField] private GameObject nodePrefab;
+    [SerializeField] private GameObject nodePrefab, grassyNode, corruptedNode, rockyNode;
     [SerializeField] private GameObject bossNodePrefab;
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] private Transform mapCanvas;
 
     private Node playerNode;
-    private int columns = 3, rows = 5;
+    private int columns = 3, rows = 6;
     public static List<List<Node>> nodeGrid;
 
     public static List<List<Node>> savedMap;
@@ -26,17 +26,18 @@ public class Map : MonoBehaviour
 
     public List<String> towerMaps = new List<String>
     {
+        "CorruptedMap",
         "RockyMap",
-        "GrassyMap",
-        "CorruptedMap"
+        "GrassyMap"
     };
 
     private void Start()
     {
+        towerMaps = new List<String>{"CorruptedMap","RockyMap","GrassyMap"};
         AudioManager.menumusicSound();
         if (nodeGrid == null)
         {
-            playerNode = new Node(-1, columns/2, Vector2.zero, playerPrefab);
+            playerNode = new Node(-1, columns/2, Vector2.zero, playerPrefab, "Player");
             GenerateNodeGrid();
             PopulateNodeGrid();
             InstantiateNodeGrid(nodeGrid);
@@ -84,7 +85,12 @@ public class Map : MonoBehaviour
                 if (nodeGrid[y][x] == null)
 
                 {
-                    nodeGrid[y][x] = new Node(y, x, Vector2.zero, nodePrefab);
+                    GameObject prefabChosen = null;
+                    String mapChosen = towerMaps[(int)UnityEngine.Random.Range(0, towerMaps.Count)];
+                    if (mapChosen == "RockyMap") prefabChosen = rockyNode;
+                    else if (mapChosen == "GrassyMap") prefabChosen = grassyNode;
+                    else prefabChosen = corruptedNode;
+                    nodeGrid[y][x] = new Node(y, x, Vector2.zero, prefabChosen, mapChosen);
                     nodesOnRow--;
                 }
             }
@@ -111,7 +117,7 @@ public class Map : MonoBehaviour
         RectTransform bossRect = bossNodeInstance.GetComponent<RectTransform>();
         bossRect.anchoredPosition = new Vector2(0, (rows * 100) - (rows / 2 * 100));
         Button bossNodeButton = bossNodeInstance.GetComponent<Button>();
-        bossNodeButton.onClick.AddListener(() => clickToMove(new Node(rows,0,bossNodeInstance.transform.position,bossNodePrefab)));
+        bossNodeButton.onClick.AddListener(() => clickToMove(new Node(rows,0,bossNodeInstance.transform.position,bossNodePrefab,"Boss")));
 
     }
 
@@ -153,7 +159,7 @@ public class Map : MonoBehaviour
 
             DifficultyManager.gameDifficulty += 10; //difficulty goes up each node chosen
             ScoreManager.score += 50;
-            SceneManager.LoadScene(towerMaps[(int)UnityEngine.Random.Range(0, towerMaps.Count)]); //random map loaded
+            SceneManager.LoadScene(targetNode.nodeType); //map loaded
         }
     }
 
@@ -179,12 +185,14 @@ public class Node
     public int column;
     public Vector2 mapPos;
     public GameObject nodePrefab;
+    public String nodeType;
 
-    public Node(int row, int column, Vector2 mapPos, GameObject nodePrefab)
+    public Node(int row, int column, Vector2 mapPos, GameObject nodePrefab, String nodeType)
     {
         this.row = row;
         this.column = column;
         this.mapPos = mapPos;
         this.nodePrefab = nodePrefab;
+        this.nodeType = nodeType;
     }
 }

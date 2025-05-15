@@ -48,3 +48,23 @@ MonoBehaviour:
     <ID>k__BackingField: 6
     <Size>k__BackingField: {x: 3, y: 3}
     <Prefab>k__BackingField: {fileID: 447683628637870570, guid: 5a3bbd9edc228a242a19cd0b5caff00e, type: 3}
+  - <Name>k__BackingField: VoiletGrowth
+    <Cost>k__BackingField: 0
+    <ID>k__BackingField: 7
+    <Size>k__BackingField: {x: 2, y: 2}
+    <Prefab>k__BackingField: {fileID: 4241238452579020061, guid: 07717fdb764cbf945867d443883d0bab, type: 3}
+  - <Name>k__BackingField: Tree
+    <Cost>k__BackingField: 0
+    <ID>k__BackingField: 8
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 5211080182786159839, guid: ec9338691407d0f46be7bab469e1c92e, type: 3}
+  - <Name>k__BackingField: Log
+    <Cost>k__BackingField: 0
+    <ID>k__BackingField: 9
+    <Size>k__BackingField: {x: 2, y: 1}
+    <Prefab>k__BackingField: {fileID: 7945903610185342753, guid: 466196061c6eb2549afdf4a42be45415, type: 3}
+  - <Name>k__BackingField: Pillar
+    <Cost>k__BackingField: 0
+    <ID>k__BackingField: 10
+    <Size>k__BackingField: {x: 2, y: 2}
+    <Prefab>k__BackingField: {fileID: 5583997820203928942, guid: efce659c2e84d374d9b7708122d3924c, type: 3}

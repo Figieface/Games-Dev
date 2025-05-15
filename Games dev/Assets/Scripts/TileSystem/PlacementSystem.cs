@@ -47,35 +47,70 @@ public class PlacementSystemm : MonoBehaviour
     private void PlaceTerrain()
     {
         String sceneName = SceneManager.GetActiveScene().name;
+        Debug.Log(sceneName);
         if (sceneName == "RockyMap")
         {
-            for (int i = 0; i < 9; i++)
+            for (int i = 0; i < 12; i++)
             {
                 if (!ManualPlacement(GetRandomVector(13, -12), 6)) i--;
             }
         }
         else if (sceneName == "GrassyMap")
         {
-
+            for (int i = 0; i < 24; i++)
+            {
+                if (!ManualPlacement(GetRandomVector(13, -12), 8)) i--;
+            }
+            for (int i = 0; i < 6; i++)
+            {
+                if (!ManualPlacement(GetRandomVector(13, -12), 9)) i--;
+            }
         }
         else if (sceneName == "CorruptedMap")
         {
-
+            for (int i = 0; i < 24; i++)
+            {
+                if (!ManualPlacement(GetRandomVector(16, -15), 7)) i--;
+            }
         }
         else if (sceneName == "BossMap")
         {
+            ManualPlacement(new Vector3Int(3, 0, 3), 10);
+            ManualPlacement(new Vector3Int(7, 0, 3), 10);
+            ManualPlacement(new Vector3Int(3, 0, 7), 10);
+
+            ManualPlacement(new Vector3Int(-4, 0, 3), 10);
+            ManualPlacement(new Vector3Int(-8, 0, 3), 10);
+            ManualPlacement(new Vector3Int(-4, 0, 7), 10);
+
+            ManualPlacement(new Vector3Int(3, 0, -4), 10);
+            ManualPlacement(new Vector3Int(3, 0, -8), 10);
+            ManualPlacement(new Vector3Int(7, 0, -4), 10);
+
+            ManualPlacement(new Vector3Int(-4, 0, -4), 10);
+            ManualPlacement(new Vector3Int(-8, 0, -4), 10);
+            ManualPlacement(new Vector3Int(-4, 0, -8), 10);
 
         }
+
     }
 
     private Vector3Int GetRandomVector(int posMax, int negMax)
     {
-        int x = RandomRange(posMax, negMax);
-        int z = RandomRange(posMax, negMax);
+        int x = UnityEngine.Random.Range(negMax, posMax);
+        int z;
+        if (x >= -4 && x <= 5)
+        {
+            z = RandomRangeOutsideCentre(posMax, negMax);
+        }
+        else
+        {
+            z = UnityEngine.Random.Range(negMax, posMax);
+        }
         return new Vector3Int(x, 0, z);
     }
 
-    private int RandomRange(int posMax, int negMax)
+    private int RandomRangeOutsideCentre(int posMax, int negMax)
     {
         // Choose either the positive or negative range
         bool posOrNeg = UnityEngine.Random.value > 0.5f;

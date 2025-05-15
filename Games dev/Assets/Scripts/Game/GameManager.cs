@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -5,8 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public static bool gameIsOver;
     public GameObject gameOverUI;
-
-    public static int difficultyScore;
+    [SerializeField] public TextMeshProUGUI scoreUI;
 
     private void Start()
     {
@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     public void EndGame()
     {
         gameOverUI.SetActive(true);
+        scoreUI.text = $"Score: {ScoreManager.score}";
         Debug.Log("Game Over!");
     }
 

@@ -2458,7 +2458,7 @@ MonoBehaviour:
   denied: {fileID: 8300000, guid: 01176e63d96743248b6aa1400617c7d3, type: 3}
   lost: {fileID: 8300000, guid: a1c4432b2fd951049bfd5d3bfe2129af, type: 3}
   won: {fileID: 8300000, guid: f332b4255a9fa66418bb76701d205dac, type: 3}
-  magic: {fileID: 8300000, guid: 4b12118bf3b90bb46a0f23cc0c76bc27, type: 3}
+  magic: {fileID: 8300000, guid: 4fe003ba15b56bc4580590e6e9e676de, type: 3}
   menumusic: {fileID: 8300000, guid: 9979c4b9e83cd7147abebcd19f027935, type: 3}
   gamemusic: {fileID: 8300000, guid: 1819c6cd807cb6f4bbe93a33d9f2843b, type: 3}
   startround: {fileID: 8300000, guid: 3fe7fb64fef715644a35a0c26d2ce65b, type: 3}

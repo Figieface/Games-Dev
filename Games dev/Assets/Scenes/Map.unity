@@ -3627,6 +3627,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nodePrefab: {fileID: 85693660727836612, guid: 0e00488b33f3d4a42a679ce8791e2111, type: 3}
+  grassyNode: {fileID: 85693660727836612, guid: 01ac3c3c4b647a7419a9c058a56d1701, type: 3}
+  corruptedNode: {fileID: 85693660727836612, guid: c9929d2e0318d7a4faaf5c8b852270bd, type: 3}
+  rockyNode: {fileID: 85693660727836612, guid: c6005db35fb8fb74588cb4fa74ad2f4d, type: 3}
   bossNodePrefab: {fileID: 8009035278321228725, guid: c2dab46b128c10b4292a263f4eeb9dc5, type: 3}
   playerPrefab: {fileID: 8322315565857303786, guid: ff1b80ca34f90f7428fbc04a7c979b94, type: 3}
   mapCanvas: {fileID: 998969537}
@@ -5799,7 +5802,7 @@ MonoBehaviour:
   denied: {fileID: 8300000, guid: 01176e63d96743248b6aa1400617c7d3, type: 3}
   lost: {fileID: 8300000, guid: a1c4432b2fd951049bfd5d3bfe2129af, type: 3}
   won: {fileID: 8300000, guid: f332b4255a9fa66418bb76701d205dac, type: 3}
-  magic: {fileID: 8300000, guid: 4b12118bf3b90bb46a0f23cc0c76bc27, type: 3}
+  magic: {fileID: 8300000, guid: 4fe003ba15b56bc4580590e6e9e676de, type: 3}
   menumusic: {fileID: 8300000, guid: 9979c4b9e83cd7147abebcd19f027935, type: 3}
   gamemusic: {fileID: 8300000, guid: 1819c6cd807cb6f4bbe93a33d9f2843b, type: 3}
   startround: {fileID: 8300000, guid: 3fe7fb64fef715644a35a0c26d2ce65b, type: 3}

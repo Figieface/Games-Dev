@@ -9,11 +9,20 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 8f91fa6dc157815438e158fda5253d49
   - enabled: 1
+    path: Assets/Scenes/Map.unity
+    guid: c2a0fd2811125064ebdbd72dd9d353ee
+  - enabled: 1
+    path: Assets/Scenes/GrassyMap.unity
+    guid: 149962fa2ff04a04eb4e5ad44df4df6e
+  - enabled: 1
+    path: Assets/Scenes/CorruptedMap.unity
+    guid: f43a1b8895c07a94fb114cd5101e0991
+  - enabled: 1
     path: Assets/Scenes/RockyMap.unity
     guid: 6565eab4d237e2643bf7df595fd39b52
   - enabled: 1
-    path: Assets/Scenes/Map.unity
-    guid: c2a0fd2811125064ebdbd72dd9d353ee
+    path: Assets/Scenes/BossMap.unity
+    guid: 8cc7149e2d0f01f45902d8fb4fbba896
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
