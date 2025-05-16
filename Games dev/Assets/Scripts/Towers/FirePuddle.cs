@@ -19,7 +19,7 @@ public class FirePuddle : MonoBehaviour
         {
             if (collider.tag == "Enemy")
             {
-                collider.gameObject.GetComponent<EnemyMovement>().currentHP -= 10;
+                collider.gameObject.GetComponent<EnemyMovement>().currentHP -= 5;
             }
         }
 

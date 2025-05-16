@@ -1219,7 +1219,7 @@ MonoBehaviour:
   turnSpeed: 7
   shootEffect: {fileID: 4369325828795889643, guid: 29d8c8c26d1ec384f8bf77d8230d5f23, type: 3}
   bulletPrefab: {fileID: 7454532586083933068, guid: 9e1ce23655d45d54da232d257001d3c8, type: 3}
-  bulletDamage: 30
+  bulletDamage: 20
   upgrade1: {fileID: 7197265931173959565, guid: 5ed126dbabf75574293017be94e1afcb, type: 3}
   upgrade2: {fileID: 6297660557155791585, guid: 5162fb0b181899149b1c77504d3f764a, type: 3}
 --- !u!1 &4174898092684865982

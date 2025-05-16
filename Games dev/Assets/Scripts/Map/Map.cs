@@ -1,13 +1,10 @@
-using NUnit.Framework;
+
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using UnityEditor.Overlays;
-using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using static UnityEngine.Rendering.DebugUI.Table;
+
 
 public class Map : MonoBehaviour
 {
@@ -159,6 +156,7 @@ public class Map : MonoBehaviour
 
             DifficultyManager.gameDifficulty += 10; //difficulty goes up each node chosen
             ScoreManager.score += 50;
+            StructureShop.startCurrency += 20;
             SceneManager.LoadScene(targetNode.nodeType); //map loaded
         }
     }

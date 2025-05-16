@@ -807,7 +807,7 @@ MonoBehaviour:
   effectLocation: {fileID: 0}
   turnSpeed: 7
   bulletPrefab: {fileID: 6960222777885829829, guid: 06c0f44217d294f4cb49b25bf120cc26, type: 3}
-  bulletDamage: 20
+  bulletDamage: 10
   upgrade1: {fileID: 298059832045853157, guid: 4993718642efe8f4a882887659beb2cc, type: 3}
   upgrade2: {fileID: 1616004057911782539, guid: a278da775383aaf4b882207c56ff4033, type: 3}
 --- !u!1 &4115037268754102906

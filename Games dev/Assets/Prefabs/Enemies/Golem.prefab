@@ -218,7 +218,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3427399251432440649}
   - component: {fileID: 1265232299357064874}
-  - component: {fileID: 654237798331459981}
+  - component: {fileID: -3341630826055883795}
   m_Layer: 0
   m_Name: Golem
   m_TagString: Enemy
@@ -265,7 +265,7 @@ MonoBehaviour:
   damage: 5
   bloodSplatter: {fileID: 5627004445674747940, guid: 37e6f9cba0a2d1b4aa8b3ecef118fa1c, type: 3}
   effectLocation: {fileID: 1520111520531731710}
---- !u!95 &654237798331459981
+--- !u!95 &-3341630826055883795
 Animator:
   serializedVersion: 7
   m_ObjectHideFlags: 0

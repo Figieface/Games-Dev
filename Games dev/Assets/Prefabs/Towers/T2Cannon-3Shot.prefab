@@ -1883,7 +1883,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 7454532586083933068, guid: 9e1ce23655d45d54da232d257001d3c8, type: 3}
   cannonSpinner: {fileID: 4146228429805626560}
   spinSpeed: 160
-  bulletDamage: 15
+  bulletDamage: 10
   upgrade1: {fileID: 0}
 --- !u!1 &8066082287232740028
 GameObject:

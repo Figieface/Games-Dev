@@ -771,7 +771,7 @@ MonoBehaviour:
   turnSpeed: 7
   shootEffect: {fileID: 0}
   bulletPrefab: {fileID: 3354820741392335069, guid: ed5468d00afdb8d4698a06e036d8c37f, type: 3}
-  bulletDamage: 45
+  bulletDamage: 30
   upgrade1: {fileID: 0}
   upgrade2: {fileID: 0}
 --- !u!1 &2635890180696069902

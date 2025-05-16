@@ -89,7 +89,7 @@ public class AudioManager : MonoBehaviour
     }
     public static void magicSound()
     {
-        AMInstance.PlaySound(AMInstance.magic, 1f);
+        AMInstance.PlaySound(AMInstance.magic, 0.3f);
     }
     public static void menumusicSound()
     {

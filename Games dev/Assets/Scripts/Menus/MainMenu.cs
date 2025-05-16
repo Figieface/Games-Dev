@@ -19,6 +19,7 @@ public class MainMenu : MonoBehaviour
         newGameQuitUI.SetActive(false);
         difficultyUI.SetActive(true);
         ScoreManager.score = 0;
+        StructureShop.startCurrency = 500;
     }
 
     public void GoToMap()

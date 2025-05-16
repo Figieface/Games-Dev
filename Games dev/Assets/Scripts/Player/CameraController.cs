@@ -31,13 +31,13 @@ public class CameraController : MonoBehaviour
         if (!allowMovement) return;
 
         Vector3 inputDir = Vector3.zero;
-        if (Input.GetKey("w") /*|| Input.mousePosition.y >= Screen.height - panBorderThickness*/)
+        if (Input.GetKey("w") || Input.mousePosition.y >= Screen.height - panBorderThickness)
             inputDir += Vector3.forward;
-        if (Input.GetKey("s") /*|| Input.mousePosition.y <= panBorderThickness*/)
+        if (Input.GetKey("s") || Input.mousePosition.y <= panBorderThickness)
             inputDir += Vector3.back;
-        if (Input.GetKey("a") /*|| Input.mousePosition.x <= panBorderThickness*/)
+        if (Input.GetKey("a") || Input.mousePosition.x <= panBorderThickness)
             inputDir += Vector3.left;
-        if (Input.GetKey("d") /*|| Input.mousePosition.x >= Screen.width - panBorderThickness*/)
+        if (Input.GetKey("d") || Input.mousePosition.x >= Screen.width - panBorderThickness)
             inputDir += Vector3.right;
 
         targetPos += inputDir.normalized * panSpeed * Time.deltaTime;
